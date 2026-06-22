@@ -1,0 +1,29 @@
+# ═══════════════════════════════════════════════════════════════
+#  ada-web — docker-compose production
+#  Port : 3002
+#
+#  Usage :
+#    docker compose up -d
+#    docker compose logs -f
+#    docker compose down
+# ═══════════════════════════════════════════════════════════════
+
+services:
+
+  ada-web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ada-web
+    restart: unless-stopped
+    environment:
+      NODE_ENV: production
+      PORT: 3002
+    ports:
+      - "3002:3002"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3002"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 20s

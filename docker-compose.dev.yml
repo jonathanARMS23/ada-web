@@ -1,0 +1,19 @@
+# ═══════════════════════════════════════════════════════════════
+#  ada-web — surcharge développement
+#  Usage : docker compose -f docker-compose.yml -f docker-compose.dev.yml up
+# ═══════════════════════════════════════════════════════════════
+
+services:
+
+  ada-web:
+    build:
+      target: builder
+    command: npm run dev
+    environment:
+      NODE_ENV: development
+    volumes:
+      - .:/app:delegated
+      - /app/node_modules
+      - /app/.next
+    ports:
+      - "3002:3002"
