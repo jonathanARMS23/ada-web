@@ -138,6 +138,10 @@ function DocHome() {
               <svg width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
               Get Started
             </Link>
+            <a href="/ADA-v7.zip" download="ADA-v7.zip" className="btn-g" style={{ padding: '11px 22px', borderRadius: 10, fontSize: 14, fontWeight: 500, textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: 7 }}>
+              <svg width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M12 5v14M5 12l7 7 7-7"/><line x1="3" y1="21" x2="21" y2="21"/></svg>
+              Download v7.2.0
+            </a>
             <Link href="/docs/arch-overview" className="btn-g" style={{ padding: '11px 22px', borderRadius: 10, fontSize: 14, fontWeight: 500 }}>
               <svg width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
               Architecture
@@ -197,49 +201,417 @@ function DocInstallation() {
       <div className="breadcrumb">Quick Start <span>›</span> Installation</div>
       <div className="page-header">
         <h1>Installation</h1>
-        <p>ADA installs in a single command. No runtime dependencies — everything is native Node.js 22+.</p>
+        <p>ADA s'installe en 4 étapes. Pas de package manager public — téléchargez l'archive officielle ci-dessous.</p>
       </div>
 
-      <h2>Prerequisites</h2>
+      {/* Download banner */}
+      <div style={{
+        display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+        background: 'linear-gradient(135deg, rgba(99,102,241,0.12), rgba(6,182,212,0.08))',
+        border: '1px solid rgba(99,102,241,0.35)',
+        borderRadius: 12, padding: '20px 24px', marginBottom: 32, gap: 16,
+      }}>
+        <div>
+          <div style={{ fontSize: 15, fontWeight: 600, color: 'var(--text)', marginBottom: 4 }}>
+            ADA v7.2.0 — Archive officielle
+          </div>
+          <div style={{ fontSize: 13, color: 'var(--text-m)' }}>
+            ZIP · 6,1 Mo · Node.js 22+ requis
+          </div>
+        </div>
+        <a
+          href="/ADA-v7.zip"
+          download="ADA-v7.zip"
+          style={{
+            display: 'inline-flex', alignItems: 'center', gap: 8,
+            padding: '10px 20px', borderRadius: 9,
+            background: 'var(--primary)', color: '#fff',
+            fontWeight: 600, fontSize: 14, textDecoration: 'none',
+            flexShrink: 0, transition: 'opacity 0.15s',
+          }}
+        >
+          <svg width="15" height="15" fill="none" stroke="currentColor" strokeWidth="2.2" viewBox="0 0 24 24">
+            <path d="M12 5v14M5 12l7 7 7-7"/><line x1="3" y1="21" x2="21" y2="21"/>
+          </svg>
+          Télécharger ADA-v7.zip
+        </a>
+      </div>
+
+      <h2>Prérequis</h2>
       <p style={{ color: 'var(--text-s)', marginBottom: 16 }}>
-        ADA uses <code>node:sqlite</code> introduced in Node.js 22.5.0. Earlier versions are not supported.
+        ADA utilise <code>node:sqlite</code> introduit dans Node.js 22.5.0. Les versions antérieures ne sont pas supportées.
       </p>
       <div className="code-block">
         <pre><code>{`node --version
-# Must show v22.5.0 or higher
+# Doit afficher v22.5.0 ou supérieur
 
-# If you use nvm
+# Si vous utilisez nvm
 nvm install 22 && nvm use 22`}</code></pre>
       </div>
       <div className="callout callout-warn">
         <span className="callout-icon">⚠</span>
         <div className="callout-body">
-          <strong>Node 20 LTS not supported</strong>
-          <p>Node.js 20 LTS does not include <code>node:sqlite</code>. Upgrading to Node 22 is required.</p>
+          <strong>Node 20 LTS non supporté</strong>
+          <p>Node.js 20 LTS n'inclut pas <code>node:sqlite</code>. La mise à jour vers Node 22 est obligatoire.</p>
         </div>
       </div>
 
-      <h2>Global install</h2>
-      <div className="code-block">
-        <pre><code>{`npm install -g ada-agent
+      <h2>Installation en 4 étapes</h2>
 
-# Or with pnpm
-pnpm add -g ada-agent
+      <div className="stepper">
+        <div className="doc-step">
+          <div className="step-num">1</div>
+          <div className="step-body">
+            <h3>Télécharger l'archive</h3>
+            <p style={{ color: 'var(--text-s)', fontSize: 14, marginBottom: 12 }}>
+              Utilisez le bouton ci-dessus, ou directement depuis le terminal.
+            </p>
+            <div className="code-block">
+              <pre><code>{`# Depuis le terminal
+curl -O https://ada.byarms.com/ADA-v7.zip`}</code></pre>
+            </div>
+          </div>
+        </div>
 
-# Or via the install script
-curl -fsSL https://ada.sh/install | bash`}</code></pre>
+        <div className="doc-step">
+          <div className="step-num">2</div>
+          <div className="step-body">
+            <h3>Décompresser et accéder au projet</h3>
+            <div className="code-block">
+              <pre><code>{`unzip ADA-v7.zip
+cd ADA-v7`}</code></pre>
+            </div>
+          </div>
+        </div>
+
+        <div className="doc-step">
+          <div className="step-num">3</div>
+          <div className="step-body">
+            <h3>Lancer l'installation</h3>
+            <p style={{ color: 'var(--text-s)', fontSize: 14, marginBottom: 12 }}>
+              Le flag <code>--with-server</code> installe également ada-api et ada-ui en plus du CLI ada-core.
+            </p>
+            <div className="code-block">
+              <pre><code>{`bash install.sh --with-server
+# ✓ ada-core    — dépendances + symlink /usr/local/bin/ada
+# ✓ ada-api     — npm install + compilation TypeScript
+# ✓ ada-ui      — npm install + next build
+# ✓ SQLite init + migrations
+# ✓ Génération .env.local`}</code></pre>
+            </div>
+          </div>
+        </div>
+
+        <div className="doc-step">
+          <div className="step-num">4</div>
+          <div className="step-body">
+            <h3>Démarrer ADA</h3>
+            <div className="code-block">
+              <pre><code>{`ada start server
+# → ada-core  ✅  (socket .claude/ada-core.sock)
+# → ada-api   ✅  (:3001, SQLite ada-api.db OK)
+# → ada-ui    ✅  (:7777, connecté à ada-api)
+# → Ouverture automatique sur http://localhost:7777`}</code></pre>
+            </div>
+          </div>
+        </div>
       </div>
 
-      <h2>Verify</h2>
+      <div className="callout callout-success">
+        <span className="callout-icon">✓</span>
+        <div className="callout-body">
+          <strong>ADA est prêt</strong>
+          <p>L'interface s'ouvre automatiquement sur <code>http://localhost:7777</code>. Pour découvrir toutes les commandes disponibles, consultez la page <a href="/docs/commands" style={{ color: 'var(--primary)' }}>Commandes ADA</a>.</p>
+        </div>
+      </div>
+
+      <h2>Vérification</h2>
       <div className="code-block">
         <pre><code>{`ada --version
 # → ADA v7.2.0 (node:sqlite ✓, node:crypto ✓, node:http ✓)
 
-ada --check
-# → Node.js: v22.5.0 ✓
-# → node:sqlite: available ✓
-# → Claude Code: detected ✓
-# → All checks passed.`}</code></pre>
+ada status
+# → ada-core  ✅  running
+# → ada-api   ✅  running (:3001)
+# → ada-ui    ✅  running (:7777)`}</code></pre>
+      </div>
+    </div>
+  )
+}
+
+function DocCommands() {
+  const commands = [
+    {
+      group: 'Serveur & cycle de vie',
+      color: 'var(--primary)',
+      items: [
+        {
+          cmd: 'ada start server',
+          desc: 'Démarre les 3 services ADA : ada-core, ada-api (:3001) et ada-ui (:7777). Ouvre automatiquement l\'interface dans le navigateur.',
+          example: `ada start server
+# → ada-core  ✅  (socket .claude/ada-core.sock)
+# → ada-api   ✅  (:3001, SQLite ada-api.db OK)
+# → ada-ui    ✅  (:7777, connecté à ada-api)`,
+          flags: [
+            { f: '--verbose', d: 'Affiche les logs combinés des 3 services en temps réel' },
+            { f: '--no-open', d: 'Ne pas ouvrir le navigateur automatiquement' },
+          ],
+        },
+        {
+          cmd: 'ada stop',
+          desc: 'Arrête proprement les 3 services ADA (SIGTERM → 2s grace period). Les données sont préservées.',
+          example: `ada stop
+# → ada-ui    stopped
+# → ada-api   stopped
+# → ada-core  stopped`,
+          flags: [
+            { f: '--force', d: 'SIGKILL immédiat si le shutdown prend plus de 5s' },
+          ],
+        },
+        {
+          cmd: 'ada status',
+          desc: 'Affiche l\'état de santé de chaque service, les ports actifs et les métriques de base.',
+          example: `ada status
+# → ada-core  ✅  running  (uptime: 2h 14m)
+# → ada-api   ✅  running  (:3001, 847 ms avg response)
+# → ada-ui    ✅  running  (:7777)`,
+          flags: [],
+        },
+        {
+          cmd: 'ada update',
+          desc: 'Met à jour ADA vers la dernière version disponible. Télécharge l\'archive, applique les migrations SQLite, redémarre les services.',
+          example: `ada update
+# → Checking latest version... v7.3.0 available
+# → Downloading ADA-v7.3.0.zip...
+# → Applying migrations...
+# → Restarting services...
+# → ✓ Updated to v7.3.0`,
+          flags: [
+            { f: '--dry-run', d: 'Affiche la version disponible sans installer' },
+            { f: '--no-restart', d: 'Met à jour les fichiers sans redémarrer les services' },
+          ],
+        },
+      ],
+    },
+    {
+      group: 'Interface & navigation',
+      color: 'var(--accent)',
+      items: [
+        {
+          cmd: 'ada open',
+          desc: 'Ouvre l\'interface ADA UI dans le navigateur par défaut. Démarre ada-ui si pas déjà en cours.',
+          example: `ada open
+# → Opening http://localhost:7777 ...`,
+          flags: [
+            { f: '--api', d: 'Ouvre l\'interface ada-api (port 3001) à la place' },
+          ],
+        },
+        {
+          cmd: 'ada launch',
+          desc: 'Alias combiné : démarre le serveur si arrêté puis ouvre l\'interface. Commande la plus courante pour reprendre le travail.',
+          example: `ada launch
+# Si ADA n'est pas démarré :
+# → Starting services...
+# → Opening http://localhost:7777
+# Si ADA est déjà démarré :
+# → Already running. Opening http://localhost:7777`,
+          flags: [],
+        },
+        {
+          cmd: 'ada dashboard',
+          desc: 'Ouvre le dashboard de monitoring embarqué sur le port 7821. Affiche les métriques Thompson Sampling, phases actives et usage tokens en temps réel via SSE.',
+          example: `ada dashboard
+# → Dashboard started: http://localhost:7821
+# → SSE endpoint:     http://localhost:7821/events
+
+ada dashboard --port 8080`,
+          flags: [
+            { f: '--port <n>', d: 'Port personnalisé (défaut : 7821)' },
+          ],
+        },
+      ],
+    },
+    {
+      group: 'Tâches & exécution',
+      color: 'var(--green)',
+      items: [
+        {
+          cmd: 'ada run "<description>"',
+          desc: 'Lance une tâche de développement. ADA classifie automatiquement le prompt (solo vs pipeline), sélectionne les agents via Thompson Sampling et orchestre l\'exécution.',
+          example: `ada run "implement user invitation feature"
+# → Classifying... [mode=pipeline, tier=2]
+# → ReasoningBank: 2 insights injectés
+# → Phase 1/3: db-schema → agent:db [haiku]
+# → Phase 2/3: backend   → agent:nestjs [opus]
+# → Phase 3/3: tdd-specs → agent:tester [haiku]`,
+          flags: [
+            { f: '--solo', d: 'Force le mode 1 agent (ignore la classification)' },
+            { f: '--tier <1|2|3>', d: 'Force un tier de modèle pour tous les agents' },
+            { f: '--dry-run', d: 'Affiche le plan sans exécuter' },
+            { f: '--json', d: 'Sortie JSON structurée pour CI/CD' },
+          ],
+        },
+        {
+          cmd: 'ada classify "<description>"',
+          desc: 'Analyse un prompt et affiche comment ADA l\'interpréterait (mode, tier, profil, phases) sans exécuter.',
+          example: `ada classify "add Stripe payment"
+# → mode=pipeline  tier=2  profile=saas-builder
+# → phases: [db-schema, backend-impl, frontend]`,
+          flags: [
+            { f: '--json', d: 'Sortie JSON avec score de confiance' },
+          ],
+        },
+      ],
+    },
+    {
+      group: 'Mémoire & ReasoningBank',
+      color: 'var(--amber)',
+      items: [
+        {
+          cmd: 'ada bank seed-conventions',
+          desc: 'Initialise le ReasoningBank en lisant les conventions depuis CLAUDE.md. À exécuter une fois par projet.',
+          example: `ada bank seed-conventions
+# → Reading .claude/CLAUDE.md...
+# → 12 conventions extracted
+# → ReasoningBank seeded: 12 insights`,
+          flags: [],
+        },
+        {
+          cmd: 'ada bank recall "<query>"',
+          desc: 'Recherche sémantique dans le ReasoningBank. Utile pour vérifier ce qu\'ADA sait déjà sur un sujet.',
+          example: `ada bank recall "NestJS JWT authentication"
+# → Insight 1 (score: 0.87): Always use PassportStrategy...
+# → Insight 2 (score: 0.81): @UseGuards au niveau controller...`,
+          flags: [
+            { f: '--top <n>', d: 'Nombre de résultats (défaut : 3)' },
+            { f: '--min-score <n>', d: 'Score minimum de pertinence (0–1)' },
+          ],
+        },
+        {
+          cmd: 'ada bank stats',
+          desc: 'Affiche les statistiques du ReasoningBank : trajectoires, insights, distributions Thompson et taille de la DB.',
+          example: `ada bank stats
+# → Trajectories: 47
+# → Insights: 31
+# → Thompson distributions: 18
+# → DB size: 2.4 MB`,
+          flags: [],
+        },
+      ],
+    },
+    {
+      group: 'Daemon & workers',
+      color: 'var(--red)',
+      items: [
+        {
+          cmd: 'ada daemon start',
+          desc: 'Démarre le processus daemon en arrière-plan. Exécute les workers planifiés (ultralearn, consolidate, audit, cve-scan).',
+          example: `ada daemon start
+# → Daemon started (PID: 14832)
+# → Log: logs/daemon.log`,
+          flags: [],
+        },
+        {
+          cmd: 'ada daemon stop',
+          desc: 'Arrête le daemon proprement (SIGTERM + 2s grace).',
+          example: `ada daemon stop
+# → Daemon stopped`,
+          flags: [],
+        },
+        {
+          cmd: 'ada daemon status',
+          desc: 'Vérifie si le daemon tourne et affiche l\'uptime.',
+          example: `ada daemon status
+# → running | uptime: 6h 42m`,
+          flags: [],
+        },
+      ],
+    },
+  ]
+
+  return (
+    <div className="page-section">
+      <div className="breadcrumb">Quick Start <span>›</span> Commandes ADA</div>
+      <div className="page-header">
+        <h1>Commandes ADA</h1>
+        <p>Référence complète des commandes simplifiées du CLI ADA. Toutes les commandes sont disponibles après installation via <code>bash install.sh --with-server</code>.</p>
+      </div>
+
+      {/* Quick reference */}
+      <div style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 12, padding: '20px 24px', marginBottom: 36 }}>
+        <div style={{ fontSize: 12, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.08em', color: 'var(--text-m)', marginBottom: 14 }}>Référence rapide</div>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: '6px 24px' }}>
+          {[
+            { cmd: 'ada start server', desc: 'Démarrer tous les services' },
+            { cmd: 'ada stop', desc: 'Arrêter ADA' },
+            { cmd: 'ada status', desc: 'État de santé' },
+            { cmd: 'ada update', desc: 'Mettre à jour ADA' },
+            { cmd: 'ada open', desc: 'Ouvrir l\'interface dans le navigateur' },
+            { cmd: 'ada launch', desc: 'Démarrer + ouvrir (usage courant)' },
+            { cmd: 'ada run "<task>"', desc: 'Lancer une tâche dev' },
+            { cmd: 'ada classify "<task>"', desc: 'Analyser sans exécuter' },
+            { cmd: 'ada dashboard', desc: 'Monitoring :7821' },
+            { cmd: 'ada bank recall "<q>"', desc: 'Recherche dans la mémoire' },
+            { cmd: 'ada daemon start', desc: 'Démarrer le daemon' },
+            { cmd: 'ada daemon stop', desc: 'Arrêter le daemon' },
+          ].map(r => (
+            <div key={r.cmd} style={{ display: 'flex', alignItems: 'baseline', gap: 10, padding: '5px 0', borderBottom: '1px solid var(--border)' }}>
+              <code style={{ fontSize: 12, color: 'var(--primary)', flexShrink: 0 }}>{r.cmd}</code>
+              <span style={{ fontSize: 12, color: 'var(--text-m)' }}>— {r.desc}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {commands.map(group => (
+        <div key={group.group} style={{ marginBottom: 48 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 20 }}>
+            <div style={{ width: 3, height: 20, borderRadius: 2, background: group.color, flexShrink: 0 }} />
+            <h2 style={{ margin: 0, fontSize: 18 }}>{group.group}</h2>
+          </div>
+
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
+            {group.items.map(item => (
+              <div key={item.cmd} style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 12, overflow: 'hidden' }}>
+                {/* Header */}
+                <div style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '16px 20px', borderBottom: '1px solid var(--border)', background: 'var(--surface-el)' }}>
+                  <code style={{ fontSize: 14, fontWeight: 700, color: group.color }}>{item.cmd}</code>
+                </div>
+
+                {/* Body */}
+                <div style={{ padding: '16px 20px', display: 'flex', flexDirection: 'column', gap: 16 }}>
+                  <p style={{ margin: 0, color: 'var(--text-s)', fontSize: 14, lineHeight: 1.65 }}>{item.desc}</p>
+
+                  <div className="code-block" style={{ margin: 0 }}>
+                    <pre><code>{item.example}</code></pre>
+                  </div>
+
+                  {item.flags.length > 0 && (
+                    <div>
+                      <div style={{ fontSize: 11, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.08em', color: 'var(--text-m)', marginBottom: 8 }}>Options</div>
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+                        {item.flags.map(flag => (
+                          <div key={flag.f} style={{ display: 'flex', alignItems: 'baseline', gap: 12, padding: '6px 10px', background: 'var(--code-bg)', borderRadius: 6 }}>
+                            <code style={{ fontSize: 12, color: 'var(--accent)', flexShrink: 0 }}>{flag.f}</code>
+                            <span style={{ fontSize: 12, color: 'var(--text-m)' }}>{flag.d}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      ))}
+
+      <div className="callout callout-info">
+        <span className="callout-icon">ℹ</span>
+        <div className="callout-body">
+          <strong>Aide contextuelle</strong>
+          <p>Chaque commande supporte <code>--help</code> : <code>ada run --help</code>, <code>ada bank --help</code>, etc.</p>
+        </div>
       </div>
     </div>
   )
@@ -2090,6 +2462,7 @@ export function DocPageClient() {
   function renderContent() {
     if (slug === '') return <DocHome />
     if (slug === 'installation') return <DocInstallation />
+    if (slug === 'commands') return <DocCommands />
     if (slug === 'configuration') return <DocConfiguration />
     if (slug === 'first-run') return <DocFirstRun />
     if (slug === 'concepts-thompson') return <DocThompson />

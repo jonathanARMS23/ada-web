@@ -10,6 +10,7 @@ export const NAV_ITEMS: NavItem[] = [
 
   // Quick Start
   { slug: 'installation', title: 'Installation', group: 'Quick Start' },
+  { slug: 'commands', title: 'Commandes ADA', group: 'Quick Start' },
   { slug: 'configuration', title: 'Configuration', group: 'Quick Start' },
   { slug: 'first-run', title: 'First Run', group: 'Quick Start' },
 
