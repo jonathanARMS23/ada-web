@@ -201,40 +201,30 @@ function DocInstallation() {
       <div className="breadcrumb">Quick Start <span>›</span> Installation</div>
       <div className="page-header">
         <h1>Installation</h1>
-        <p>ADA s'installe en 4 étapes. Pas de package manager public — téléchargez l'archive officielle ci-dessous.</p>
+        <p>Une seule commande suffit — l'installeur télécharge ADA, vérifie les prérequis et configure tout automatiquement.</p>
       </div>
 
-      {/* Download banner */}
+      {/* Curl one-liner — méthode recommandée */}
       <div style={{
-        display: 'flex', alignItems: 'center', justifyContent: 'space-between',
         background: 'linear-gradient(135deg, rgba(99,102,241,0.12), rgba(6,182,212,0.08))',
         border: '1px solid rgba(99,102,241,0.35)',
-        borderRadius: 12, padding: '20px 24px', marginBottom: 32, gap: 16,
+        borderRadius: 12, padding: '24px', marginBottom: 32,
       }}>
-        <div>
-          <div style={{ fontSize: 15, fontWeight: 600, color: 'var(--text)', marginBottom: 4 }}>
-            ADA v7.2.0 — Archive officielle
-          </div>
-          <div style={{ fontSize: 13, color: 'var(--text-m)' }}>
-            ZIP · 6,1 Mo · Node.js 22+ requis
-          </div>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 12 }}>
+          <span style={{
+            fontSize: 11, fontWeight: 700, letterSpacing: '0.06em',
+            color: 'var(--primary)', textTransform: 'uppercase',
+            background: 'rgba(99,102,241,0.12)', padding: '2px 8px', borderRadius: 4,
+          }}>Recommandé</span>
+          <span style={{ fontSize: 13, color: 'var(--text-m)' }}>CLI + Serveur</span>
         </div>
-        <a
-          href="/ADA-v7.zip"
-          download="ADA-v7.zip"
-          style={{
-            display: 'inline-flex', alignItems: 'center', gap: 8,
-            padding: '10px 20px', borderRadius: 9,
-            background: 'var(--primary)', color: '#fff',
-            fontWeight: 600, fontSize: 14, textDecoration: 'none',
-            flexShrink: 0, transition: 'opacity 0.15s',
-          }}
-        >
-          <svg width="15" height="15" fill="none" stroke="currentColor" strokeWidth="2.2" viewBox="0 0 24 24">
-            <path d="M12 5v14M5 12l7 7 7-7"/><line x1="3" y1="21" x2="21" y2="21"/>
-          </svg>
-          Télécharger ADA-v7.zip
-        </a>
+        <div className="code-block" style={{ marginBottom: 12 }}>
+          <pre><code>{`curl -fsSL https://ada.byarms.com/install.sh | bash -s -- --with-server`}</code></pre>
+        </div>
+        <p style={{ fontSize: 13, color: 'var(--text-s)', margin: 0 }}>
+          Installe <strong>ada-core</strong> (CLI), <strong>ada-api</strong> (:3001) et <strong>ada-ui</strong> (:7777).
+          Supprime le flag <code>--with-server</code> pour le CLI seul.
+        </p>
       </div>
 
       <h2>Prérequis</h2>
@@ -256,44 +246,38 @@ nvm install 22 && nvm use 22`}</code></pre>
         </div>
       </div>
 
-      <h2>Installation en 4 étapes</h2>
+      <h2>Ce que fait l'installeur</h2>
+      <p style={{ color: 'var(--text-s)', marginBottom: 16 }}>
+        Le script vérifie les prérequis, télécharge la dernière release depuis GitHub, puis lance l'installeur interne.
+      </p>
 
       <div className="stepper">
         <div className="doc-step">
           <div className="step-num">1</div>
           <div className="step-body">
-            <h3>Télécharger l'archive</h3>
-            <p style={{ color: 'var(--text-s)', fontSize: 14, marginBottom: 12 }}>
-              Utilisez le bouton ci-dessus, ou directement depuis le terminal.
+            <h3>Vérification des prérequis</h3>
+            <p style={{ color: 'var(--text-s)', fontSize: 14, marginBottom: 0 }}>
+              Node.js 22+, curl, unzip. Le script s'arrête avec un message clair si un prérequis manque.
             </p>
-            <div className="code-block">
-              <pre><code>{`# Depuis le terminal
-curl -O https://ada.byarms.com/ADA-v7.zip`}</code></pre>
-            </div>
           </div>
         </div>
 
         <div className="doc-step">
           <div className="step-num">2</div>
           <div className="step-body">
-            <h3>Décompresser et accéder au projet</h3>
-            <div className="code-block">
-              <pre><code>{`unzip ADA-v7.zip
-cd ADA-v7`}</code></pre>
-            </div>
+            <h3>Téléchargement de la dernière release</h3>
+            <p style={{ color: 'var(--text-s)', fontSize: 14, marginBottom: 0 }}>
+              Récupère automatiquement la version la plus récente depuis GitHub Releases.
+            </p>
           </div>
         </div>
 
         <div className="doc-step">
           <div className="step-num">3</div>
           <div className="step-body">
-            <h3>Lancer l'installation</h3>
-            <p style={{ color: 'var(--text-s)', fontSize: 14, marginBottom: 12 }}>
-              Le flag <code>--with-server</code> installe également ada-api et ada-ui en plus du CLI ada-core.
-            </p>
+            <h3>Installation</h3>
             <div className="code-block">
-              <pre><code>{`bash install.sh --with-server
-# ✓ ada-core    — dépendances + symlink /usr/local/bin/ada
+              <pre><code>{`# ✓ ada-core    — dépendances + symlink /usr/local/bin/ada
 # ✓ ada-api     — npm install + compilation TypeScript
 # ✓ ada-ui      — npm install + next build
 # ✓ SQLite init + migrations
@@ -305,7 +289,7 @@ cd ADA-v7`}</code></pre>
         <div className="doc-step">
           <div className="step-num">4</div>
           <div className="step-body">
-            <h3>Démarrer ADA</h3>
+            <h3>Démarrage automatique</h3>
             <div className="code-block">
               <pre><code>{`ada start server
 # → ada-core  ✅  (socket .claude/ada-core.sock)
@@ -323,6 +307,22 @@ cd ADA-v7`}</code></pre>
           <strong>ADA est prêt</strong>
           <p>L'interface s'ouvre automatiquement sur <code>http://localhost:7777</code>. Pour découvrir toutes les commandes disponibles, consultez la page <a href="/docs/commands" style={{ color: 'var(--primary)' }}>Commandes ADA</a>.</p>
         </div>
+      </div>
+
+      <h2>Installation manuelle (alternative)</h2>
+      <p style={{ color: 'var(--text-s)', marginBottom: 16 }}>
+        Si vous préférez télécharger l'archive vous-même :
+      </p>
+      <div className="code-block">
+        <pre><code>{`# 1. Télécharger
+curl -O https://ada.byarms.com/ADA-v7.zip
+
+# 2. Extraire et installer
+unzip ADA-v7.zip && cd ADA-v7
+bash install.sh --with-server
+
+# 3. Démarrer
+ada start server`}</code></pre>
       </div>
 
       <h2>Vérification</h2>
