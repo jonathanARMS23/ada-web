@@ -21,7 +21,10 @@ set -euo pipefail
 
 # ─── Configuration ───────────────────────────────────────────────────────────
 GITHUB_REPO="jonathanARMS23/AI-Dev-Assistant"
-FALLBACK_ZIP_URL="https://ada.byarms.com/ADA-v7.zip"   # secours si pas de release GitHub
+# ADA_BASE_URL peut être surchargé pour tester sans domaine configuré :
+#   ADA_BASE_URL=http://95.216.187.73 curl ... | bash -s -- --with-server
+ADA_BASE_URL="${ADA_BASE_URL:-https://ada.byarms.com}"
+FALLBACK_ZIP_URL="${ADA_BASE_URL}/ADA-v7.zip"
 INSTALL_PREFIX="${ADA_INSTALL_PREFIX:-$HOME/.ada}"
 
 # ─── Couleurs ────────────────────────────────────────────────────────────────
