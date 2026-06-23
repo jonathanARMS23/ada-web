@@ -1,0 +1,78 @@
+# ══════════════════════════════════════════════════════════════════════════════
+#  ada-web — CI / CD
+#
+#  ┌─ quality ──────────────────────────────────────────────────────────┐
+#  │  lint → build                                                       │
+#  │  déclenché : tout push / toute PR ciblant main                     │
+#  └────────────────────────────────────────────────────────────────────┘
+#  ┌─ deploy ───────────────────────────────────────────────────────────┐
+#  │  trigger Coolify via API (uniquement push sur main après quality)   │
+#  │  Secrets requis dans le dépôt GitHub :                              │
+#  │    COOLIFY_HOST      — URL de votre instance (ex: coolify.domain.com)│
+#  │    COOLIFY_TOKEN     — Token API Coolify (Settings → API Keys)      │
+#  │    COOLIFY_APP_UUID  — UUID de ada-web dans Coolify                 │
+#  └────────────────────────────────────────────────────────────────────┘
+# ══════════════════════════════════════════════════════════════════════════════
+
+name: CI / CD
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+# Annule les runs en cours si un nouveau commit arrive sur la même branche
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # ── Quality gate ─────────────────────────────────────────────────────────────
+  quality:
+    name: Quality
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Build
+        run: npm run build
+        env:
+          NODE_ENV: production
+
+  # ── Deploy → Coolify ─────────────────────────────────────────────────────────
+  deploy:
+    name: Deploy → Coolify
+    needs: quality
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+
+    steps:
+      - name: Trigger Coolify deployment
+        run: |
+          RESPONSE=$(curl -s -w "\n%{http_code}" \
+            -H "Authorization: Bearer ${{ secrets.COOLIFY_TOKEN }}" \
+            "https://${{ secrets.COOLIFY_HOST }}/api/v1/deploy?uuid=${{ secrets.COOLIFY_APP_UUID }}&force=false")
+          HTTP_CODE=$(echo "$RESPONSE" | tail -n1)
+          BODY=$(echo "$RESPONSE" | head -n -1)
+          echo "Status : $HTTP_CODE"
+          echo "Body   : $BODY"
+          if [ "$HTTP_CODE" != "200" ] && [ "$HTTP_CODE" != "201" ]; then
+            echo "❌ Coolify deploy trigger failed (HTTP $HTTP_CODE)"
+            exit 1
+          fi
+          echo "✓ Coolify deployment triggered"
