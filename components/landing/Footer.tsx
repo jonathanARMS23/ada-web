@@ -11,7 +11,7 @@ export function Footer() {
             <Image src="/ada-logo.png" alt="ADA" fill style={{ objectFit: 'cover', objectPosition: 'center' }} />
           </div>
           <div>
-            <span style={{ fontWeight: 600, color: 'var(--text-s)' }}>ADA v7.2.0</span>
+            <span style={{ fontWeight: 600, color: 'var(--text-s)' }}>ADA v7.3.0</span>
             <span style={{ color: 'var(--text-m)', marginLeft: 6 }}>— Orchestrate. Learn. Ship.</span>
           </div>
         </div>

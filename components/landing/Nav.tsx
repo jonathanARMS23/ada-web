@@ -21,7 +21,7 @@ export function Nav() {
         <span className="logo-name">ADA</span>
         <span className="v-badge">
           <span className="v-badge-dot" />
-          v7.2.0
+          v7.3.0
         </span>
       </Link>
       <ul className="nav-links">
