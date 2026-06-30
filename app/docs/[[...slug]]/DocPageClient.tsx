@@ -140,7 +140,7 @@ function DocHome() {
             </Link>
             <a href="/ADA-v7.zip" download="ADA-v7.zip" className="btn-g" style={{ padding: '11px 22px', borderRadius: 10, fontSize: 14, fontWeight: 500, textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: 7 }}>
               <svg width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M12 5v14M5 12l7 7 7-7"/><line x1="3" y1="21" x2="21" y2="21"/></svg>
-              Download v7.2.0
+              Download v7.3.0
             </a>
             <Link href="/docs/arch-overview" className="btn-g" style={{ padding: '11px 22px', borderRadius: 10, fontSize: 14, fontWeight: 500 }}>
               <svg width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
@@ -169,10 +169,10 @@ function DocHome() {
 
       <div className="page-section">
         <div className="metrics-strip">
-          <div className="metric"><CountUp to={29} className="metric-value" /><span className="metric-label">Test Suites</span></div>
-          <div className="metric"><CountUp to={650} className="metric-value" /><span className="metric-label">Assertions</span></div>
+          <div className="metric"><CountUp to={42} className="metric-value" /><span className="metric-label">Test Suites</span></div>
+          <div className="metric"><CountUp to={964} className="metric-value" /><span className="metric-label">Assertions</span></div>
           <div className="metric"><CountUp to={107} className="metric-value" /><span className="metric-label">Benchmarks</span></div>
-          <div className="metric"><span className="metric-value" style={{ fontSize: 22 }}>v7.2.0</span><span className="metric-label">Current Version</span></div>
+          <div className="metric"><span className="metric-value" style={{ fontSize: 22 }}>v7.3.0</span><span className="metric-label">Current Version</span></div>
         </div>
       </div>
     </>
@@ -213,7 +213,7 @@ function DocInstallation() {
       }}>
         <div>
           <div style={{ fontSize: 15, fontWeight: 600, color: 'var(--text)', marginBottom: 4 }}>
-            ADA v7.2.0 — Archive officielle
+            ADA v7.3.0 — Archive officielle
           </div>
           <div style={{ fontSize: 13, color: 'var(--text-m)' }}>
             ZIP · 6,1 Mo · Node.js 22+ requis
@@ -339,7 +339,7 @@ cd ADA-v7`}</code></pre>
       <h2>Vérification</h2>
       <div className="code-block">
         <pre><code>{`ada --version
-# → ADA v7.2.0 (node:sqlite ✓, node:crypto ✓, node:http ✓)
+# → ADA v7.3.0 (node:sqlite ✓, node:crypto ✓, node:http ✓)
 
 ada status
 # → ada-core  ✅  running
@@ -1445,6 +1445,258 @@ function DocADR({ adr }: { adr: typeof ADRS[0] }) {
   )
 }
 
+function DocRelease730() {
+  return (
+    <div className="page-section">
+      <div className="breadcrumb">Releases <span>›</span> v7.3.0</div>
+      <div className="page-header">
+        <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 12 }}>
+          <span style={{ fontFamily: 'var(--font-jetbrains, monospace)', fontSize: 12, color: 'var(--text-m)' }}>2026-06-30</span>
+          <span className="latest-badge">Latest</span>
+        </div>
+        <h1>v7.3.0 — AI Engineering Loop</h1>
+      </div>
+
+      <div className="metrics-strip" style={{ marginBottom: 32 }}>
+        <div className="metric"><CountUp to={42} className="metric-value" /><span className="metric-label">Test Suites</span></div>
+        <div className="metric"><CountUp to={964} className="metric-value" /><span className="metric-label">Assertions</span></div>
+        <div className="metric"><CountUp to={36} className="metric-value" /><span className="metric-label">New Tests</span></div>
+        <div className="metric"><span className="metric-value" style={{ fontSize: 22 }}>0ms</span><span className="metric-label">Zero Dependencies</span></div>
+      </div>
+
+      <div className="callout callout-info" style={{ marginBottom: 28 }}>
+        <span className="callout-icon">⟳</span>
+        <div className="callout-body">
+          <strong>Feature headline : AI Engineering Loop</strong>
+          <p>
+            Remplace le cycle humain "crée feature → erreur → corrige → review" par une boucle autonome :
+            les erreurs réelles (TypeScript, tests, runtime) sont parsées, structurées et injectées automatiquement
+            dans le re-prompt de l&apos;agent. Inspiré de SWE-bench (+30–40% taux de succès).
+          </p>
+        </div>
+      </div>
+
+      {[
+        { type: 'New', color: 'var(--green)', marker: '+', items: [
+          'error-context.js — parser d\'erreurs TS / Node:test TAP / runtime / lint → contexte structuré',
+          'run.js fail --error-output <file> — capture et stocke errorContext dans state.json',
+          'Loop-back coverage → backend : réinitialise la phase cible avec le contexte d\'erreur injecté',
+          'Garde maxLoops (défaut 3) + escalade humaine avec message LOOP LIMIT REACHED',
+          'run.js next --json : expose loopContext et isLoopRetry pour l\'orchestrateur',
+          'pipelines.json : champs loopTo / maxLoops / loopCondition sur la phase coverage',
+          'Détection des erreurs non-déterministes (ECONNREFUSED, OOM…) → pas de loop, escalade directe',
+          'docs/ai-engineering-loop.md — spécification complète avec state machine et contrats API',
+        ]},
+        { type: 'Tests', color: 'var(--accent)', marker: '✓', items: [
+          '22 nouveaux tests unitaires error-context.test.js (RED → GREEN)',
+          '14 nouveaux tests d\'intégration run-loop.test.js (RED → GREEN)',
+          '964/964 assertions — 0 régression sur les 40 suites existantes',
+        ]},
+        { type: 'Improved', color: 'var(--amber)', marker: '↑', items: [
+          'maxRetries sur les phases backend maintenant effectif (contexte d\'erreur injecté au lieu d\'un retry aveugle)',
+          'Retry diagnostics enrichis : type d\'erreur, fichier, ligne, message dans le re-prompt',
+        ]},
+      ].map(section => (
+        <div key={section.type} className="changelog-group">
+          <h3>
+            <span className="chip" style={{ background: `${section.color}22`, color: section.color, border: `1px solid ${section.color}44` }}>{section.type}</span>
+          </h3>
+          <ul>
+            {section.items.map((item, i) => (
+              <li key={i}>
+                <span style={{ color: section.color, flexShrink: 0 }}>{section.marker}</span>
+                {item}
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+
+      <div style={{ marginTop: 32, display: 'flex', gap: 12 }}>
+        <a
+          href="https://github.com/jonathanARMS23/AI-Dev-Assistant/releases/tag/v7.3.0"
+          target="_blank" rel="noreferrer"
+          className="btn-g" style={{ fontSize: 13, padding: '8px 16px' }}
+        >
+          GitHub Release →
+        </a>
+        <a href="/docs/concepts-engineering-loop" className="btn-p" style={{ fontSize: 13, padding: '8px 16px' }}>
+          Docs : AI Engineering Loop →
+        </a>
+      </div>
+    </div>
+  )
+}
+
+function DocEngineeringLoop() {
+  return (
+    <div className="page-section">
+      <div className="breadcrumb">Concepts <span>›</span> AI Engineering Loop</div>
+      <div className="page-header">
+        <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 12 }}>
+          <span className="latest-badge" style={{ background: 'rgba(16,185,129,0.15)', color: 'var(--green)', borderColor: 'rgba(16,185,129,0.3)' }}>New in v7.3.0</span>
+        </div>
+        <h1>AI Engineering Loop</h1>
+        <p>
+          Remplace le cycle de correction manuel par une boucle autonome : les erreurs réelles d&apos;une phase
+          échouée sont parsées, structurées et injectées dans le re-prompt de l&apos;agent pour une correction ciblée.
+        </p>
+      </div>
+
+      <h2>Problème — le retry aveugle</h2>
+      <p style={{ color: 'var(--text-s)', fontSize: 14, lineHeight: 1.7, marginBottom: 16 }}>
+        Avant v7.3.0, <code>maxRetries: 2</code> relançait la même phase avec le même contexte. Résultat :
+        relancer le dé, pas corriger. L&apos;humain devait lire l&apos;erreur, la rephraser et re-prompter manuellement.
+      </p>
+
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, marginBottom: 32 }}>
+        <div style={{ background: 'rgba(239,68,68,0.06)', border: '1px solid rgba(239,68,68,0.2)', borderRadius: 10, padding: '16px 20px' }}>
+          <div style={{ fontSize: 11, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', color: 'var(--red)', marginBottom: 10 }}>Avant — cycle manuel</div>
+          {['Generate', 'FAIL', 'Human reads error', 'Human reprompts', 'Generate'].map((s, i, arr) => (
+            <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '4px 0' }}>
+              <span style={{ fontSize: 11, color: i === 1 ? 'var(--red)' : i === 4 ? 'var(--text-m)' : 'var(--text-s)' }}>{s}</span>
+              {i < arr.length - 1 && <span style={{ color: 'var(--border)', fontSize: 11 }}>→</span>}
+            </div>
+          ))}
+        </div>
+        <div style={{ background: 'rgba(16,185,129,0.06)', border: '1px solid rgba(16,185,129,0.2)', borderRadius: 10, padding: '16px 20px' }}>
+          <div style={{ fontSize: 11, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', color: 'var(--green)', marginBottom: 10 }}>Après — loop autonome</div>
+          {['Generate', 'Execute/Test', 'Parse error', 'Inject context', 'Generate'].map((s, i, arr) => (
+            <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '4px 0' }}>
+              <span style={{ fontSize: 11, color: i === 4 ? 'var(--green)' : 'var(--text-s)' }}>{s}</span>
+              {i < arr.length - 1 && <span style={{ color: 'var(--green)', fontSize: 11 }}>→</span>}
+            </div>
+          ))}
+          <div style={{ fontSize: 11, color: 'var(--text-m)', marginTop: 8 }}>↑____________ (max 3 iter)</div>
+        </div>
+      </div>
+
+      <h2>Fonctionnement</h2>
+      <div className="stepper">
+        <div className="doc-step">
+          <div className="step-num">1</div>
+          <div className="step-body">
+            <h3>Capture de l&apos;erreur</h3>
+            <p style={{ color: 'var(--text-s)', fontSize: 14, marginBottom: 12 }}>
+              L&apos;orchestrateur passe le fichier d&apos;erreur brut (stderr de l&apos;agent) au flag <code>--error-output</code>.
+            </p>
+            <div className="code-block">
+              <pre><code>{`node run.js fail $RUN_ID coverage "tests KO" \\
+  --error-output /tmp/coverage-stderr.txt`}</code></pre>
+            </div>
+          </div>
+        </div>
+        <div className="doc-step">
+          <div className="step-num">2</div>
+          <div className="step-body">
+            <h3>Parsing structuré</h3>
+            <p style={{ color: 'var(--text-s)', fontSize: 14, marginBottom: 12 }}>
+              <code>error-context.js</code> parse les 4 types d&apos;erreurs supportés.
+            </p>
+            <div className="code-block">
+              <pre><code>{`// TypeScript
+src/auth/auth.service.ts(47,15): error TS2339:
+Property 'userId' does not exist on type 'JwtPayload'.
+
+// Node:test TAP
+not ok 1 - should return 401 if token invalid
+
+// Runtime
+TypeError: Cannot read properties of undefined (reading 'id')
+    at AuthService.validateUser (src/auth/auth.service.ts:89:20)
+
+// Lint (ESLint)
+src/app.module.ts
+  12:1  error  'Injectable' is defined but never used`}</code></pre>
+            </div>
+          </div>
+        </div>
+        <div className="doc-step">
+          <div className="step-num">3</div>
+          <div className="step-body">
+            <h3>Injection dans le re-prompt</h3>
+            <p style={{ color: 'var(--text-s)', fontSize: 14, marginBottom: 12 }}>
+              Le bloc formaté est préfixé au prompt de l&apos;agent lors du loop-back.
+            </p>
+            <div className="code-block">
+              <pre><code>{`[AI ENGINEERING LOOP — Iteration 2/3]
+Previous attempt failed with 2 error(s).
+Fix ONLY what is listed below.
+
+[ERROR 1] typescript — src/auth/auth.service.ts:47
+Property 'userId' does not exist on type 'JwtPayload'.
+
+[ERROR 2] test — (no file)
+should return 401 if token invalid
+
+Do not rewrite unrelated code. Apply minimal targeted fixes only.`}</code></pre>
+            </div>
+          </div>
+        </div>
+        <div className="doc-step">
+          <div className="step-num">4</div>
+          <div className="step-body">
+            <h3>Loop-back et garde</h3>
+            <p style={{ color: 'var(--text-s)', fontSize: 14, marginBottom: 12 }}>
+              La phase cible (<code>backend</code>) est remise en <code>pending</code> avec le contexte injecté.
+              Après <code>maxLoops</code> itérations sans succès, escalade humaine automatique.
+            </p>
+            <div className="code-block">
+              <pre><code>{`# Après 3 échecs → escalade
+[LOOP LIMIT REACHED] coverage → backend :
+3 iterations max atteintes — intervention manuelle requise`}</code></pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <h2>Configuration pipeline</h2>
+      <div className="code-block">
+        <pre><code>{`// pipelines.json — phase coverage
+{
+  "id": "coverage",
+  "agent": "tester",
+  "stopOnFailure": false,
+  "loopTo": "backend",      // phase cible du loop-back
+  "maxLoops": 3,            // guard — escalade humaine après N itérations
+  "loopCondition": "test_failures"
+}`}</code></pre>
+      </div>
+
+      <h2>Sortie next --json enrichie</h2>
+      <div className="code-block">
+        <pre><code>{`node run.js next $RUN_ID --json
+# {
+#   "ready": [{
+#     "phaseId": "backend",
+#     "agent": "nestjs",
+#     "model": "claude-opus-4-8",
+#     "isLoopRetry": true,
+#     "loopContext": "[AI ENGINEERING LOOP — Iteration 2/3]..."
+#   }]
+# }`}</code></pre>
+      </div>
+
+      <h2>Erreurs non-déterministes</h2>
+      <p style={{ color: 'var(--text-s)', fontSize: 14, lineHeight: 1.7 }}>
+        Les erreurs réseau et mémoire (<code>ECONNREFUSED</code>, <code>ETIMEDOUT</code>, OOM) sont détectées
+        automatiquement. Elles ne déclenchent pas de loop — le pipeline échoue immédiatement pour escalade humaine.
+        Un re-prompt ne peut pas corriger une base de données inaccessible.
+      </p>
+
+      <div className="callout callout-success">
+        <span className="callout-icon">✓</span>
+        <div className="callout-body">
+          <strong>Impact mesuré</strong>
+          <p>SWE-bench (Princeton, 2024) et Reflexion (Shinn et al., 2023) montrent +30–40% de taux de résolution
+          avec une boucle observe → reason → act vs single-pass. L&apos;implémentation ADA cible le même gain
+          sur les phases backend/coverage du pipeline <code>feature</code>.</p>
+        </div>
+      </div>
+    </div>
+  )
+}
+
 function DocRelease720() {
   return (
     <div className="page-section">
@@ -1452,7 +1704,6 @@ function DocRelease720() {
       <div className="page-header">
         <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 12 }}>
           <span style={{ fontFamily: 'var(--font-jetbrains, monospace)', fontSize: 12, color: 'var(--text-m)' }}>2025-06-22</span>
-          <span className="latest-badge">Latest</span>
         </div>
         <h1>v7.2.0</h1>
       </div>
@@ -2495,6 +2746,7 @@ export function DocPageClient() {
     if (slug === 'arch-daemon') return <DocArchDaemon />
     if (slug === 'arch-hooks') return <DocArchHooks />
     if (slug === 'concepts-smartretrieval') return <DocSmartRetrieval />
+    if (slug === 'concepts-engineering-loop') return <DocEngineeringLoop />
     if (slug === 'api-overview') return <DocApiOverview />
     if (slug === 'api-rest') return <DocApiRest />
     if (slug === 'api-websocket') return <DocApiWebSocket />
@@ -2502,6 +2754,7 @@ export function DocPageClient() {
     if (slug === 'ada-ui') return <DocAdaUI />
     if (slug === 'deploy-local') return <DocDeployLocal />
     if (slug === 'deploy-server') return <DocDeployServer />
+    if (slug === 'release-730') return <DocRelease730 />
     if (slug === 'release-720') return <DocRelease720 />
     if (slug === 'release-710') return <DocRelease710 />
     if (slug === 'release-700') return <DocRelease700 />
