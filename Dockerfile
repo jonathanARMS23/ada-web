@@ -21,9 +21,23 @@ RUN addgroup -g 1001 -S adaweb && adduser -u 1001 -S adaweb -G adaweb
 WORKDIR /app
 ENV NODE_ENV=production PORT=3002 HOSTNAME=0.0.0.0
 
+# Chemins par défaut du téléchargement gaté (surchargeables via Coolify)
+ENV CODES_DB_PATH=/app/data/codes.db \
+    DOWNLOAD_FILE_PATH=/app/private-assets/ADA-v7.zip
+
 COPY --from=builder --chown=adaweb:adaweb /build/.next/standalone ./
 COPY --from=builder --chown=adaweb:adaweb /build/.next/static ./.next/static
 COPY --from=builder --chown=adaweb:adaweb /build/public ./public
+
+# Archive hors de public/ : servie uniquement par /api/download/file après
+# validation d'un code. `output: standalone` ne trace pas ce dossier, d'où
+# ce COPY explicite.
+COPY --from=builder --chown=adaweb:adaweb /build/private-assets ./private-assets
+
+# Dossier de la base SQLite. Créé et chown AVANT `USER adaweb` : un volume
+# Docker neuf hérite du propriétaire/permissions du dossier de l'image, ce qui
+# garantit que l'utilisateur non-root peut écrire (WAL inclus).
+RUN mkdir -p /app/data && chown -R adaweb:adaweb /app/data
 
 USER adaweb
 EXPOSE 3002

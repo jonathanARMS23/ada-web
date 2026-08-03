@@ -11,6 +11,13 @@ services:
     command: npm run dev
     environment:
       NODE_ENV: development
+      # /app/data reste servi par le volume nommé `ada-web-data` déclaré dans
+      # docker-compose.yml (les listes de volumes des deux fichiers fusionnent,
+      # les cibles étant distinctes de /app).
+      CODES_DB_PATH: /app/data/codes.db
+      DOWNLOAD_FILE_PATH: /app/private-assets/ADA-v7.zip
+      DOWNLOAD_TOKEN_TTL_SECONDS: 60
+      INTERNAL_API_KEY: ${INTERNAL_API_KEY:-dev-internal-key}
     volumes:
       - .:/app:delegated
       - /app/node_modules

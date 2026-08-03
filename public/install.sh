@@ -3,15 +3,19 @@
 #  ADA — Bootstrap Installer
 #
 #  Usage:
-#    # CLI seulement
+#    # CLI seulement (nécessite une release GitHub publique, sinon voir ADA_CODE)
 #    curl -fsSL https://ada.byarms.com/install.sh | bash
 #
+#    # Avec un code d'achat (repo GitHub privé → seul chemin qui fonctionne)
+#    ADA_CODE=XXXX-XXXX-XXXX-XXXX curl -fsSL https://ada.byarms.com/install.sh | bash
+#
 #    # CLI + ada-api + ada-ui (recommandé)
-#    curl -fsSL https://ada.byarms.com/install.sh | bash -s -- --with-server
+#    ADA_CODE=XXXX-XXXX-XXXX-XXXX curl -fsSL https://ada.byarms.com/install.sh | bash -s -- --with-server
 #
 #  Ce script :
 #    1. Vérifie les prérequis (Node 22+, curl, unzip)
-#    2. Télécharge la dernière release depuis GitHub
+#    2. Télécharge l'archive — via ADA_CODE (code d'achat) si fourni,
+#       sinon tente la dernière release GitHub publique
 #    3. Extrait l'archive dans /tmp/ada-install
 #    4. Exécute l'installeur interne (install.sh [--with-server])
 #    5. Configure le PATH si nécessaire
@@ -24,7 +28,9 @@ GITHUB_REPO="jonathanARMS23/AI-Dev-Assistant"
 # ADA_BASE_URL peut être surchargé pour tester sans domaine configuré :
 #   ADA_BASE_URL=http://95.216.187.73 curl ... | bash -s -- --with-server
 ADA_BASE_URL="${ADA_BASE_URL:-https://ada.byarms.com}"
-FALLBACK_ZIP_URL="${ADA_BASE_URL}/ADA-v7.zip"
+# ADA_CODE : code d'achat à usage unique (cf. ada-web /api/download/redeem).
+# Si défini, il remplace entièrement le flux GitHub releases.
+ADA_CODE="${ADA_CODE:-}"
 INSTALL_PREFIX="${ADA_INSTALL_PREFIX:-$HOME/.ada}"
 
 # ─── Couleurs ────────────────────────────────────────────────────────────────
@@ -35,9 +41,14 @@ else
   RED=''; GREEN=''; YELLOW=''; CYAN=''; BOLD=''; DIM=''; NC=''
 fi
 
-log_step()  { echo -e "${CYAN}→${NC} $*"; }
-log_ok()    { echo -e "${GREEN}✓${NC} $*"; }
-log_warn()  { echo -e "${YELLOW}⚠${NC} $*"; }
+## Toujours sur stderr (>&2) : ces helpers sont appelés depuis des fonctions
+## dont le stdout est capturé via $(...) (get_download_url, download_and_extract,
+## redeem_code_for_download_url) — un message sur stdout corromprait la valeur
+## retournée (bug latent avant ce correctif : jamais exercé car le seul chemin
+## qui fonctionnait ne loggait rien avant son `echo` final).
+log_step()  { echo -e "${CYAN}→${NC} $*" >&2; }
+log_ok()    { echo -e "${GREEN}✓${NC} $*" >&2; }
+log_warn()  { echo -e "${YELLOW}⚠${NC} $*" >&2; }
 log_error() { echo -e "${RED}✗${NC} $*" >&2; }
 
 # ─── Banner ──────────────────────────────────────────────────────────────────
@@ -61,6 +72,15 @@ for arg in "$@"; do
   [[ "$arg" == "--help" ]] && {
     echo "Usage: curl -fsSL https://ada.byarms.com/install.sh | bash -s -- [--with-server]"
     echo "  --with-server    Install ada-api + ada-ui in addition to ada-core CLI"
+    echo
+    echo "Env vars:"
+    echo "  ADA_CODE             Code d'achat à usage unique (XXXX-XXXX-XXXX-XXXX)."
+    echo "                       Requis si la release GitHub n'est pas publique."
+    echo "  ADA_BASE_URL         Override de l'URL de base (défaut: https://ada.byarms.com)"
+    echo "  ADA_INSTALL_PREFIX   Override du préfixe d'installation (défaut: \$HOME/.ada)"
+    echo
+    echo "Exemple avec code d'achat :"
+    echo "  ADA_CODE=XXXX-XXXX-XXXX-XXXX curl -fsSL https://ada.byarms.com/install.sh | bash -s -- --with-server"
     exit 0
   }
 done
@@ -102,6 +122,54 @@ check_prereqs() {
 }
 
 # ─── Téléchargement ──────────────────────────────────────────────────────────
+
+# Échange un code d'achat à usage unique contre une URL de téléchargement.
+# Flux : POST /api/download/redeem {code} → downloadToken → /api/download/file?token=...
+# N'importe quel échec (code invalide/déjà utilisé/erreur réseau) est fatal :
+# on ne retombe JAMAIS silencieusement sur un autre chemin.
+redeem_code_for_download_url() {
+  local CODE="$1"
+  local URL="${ADA_BASE_URL}/api/download/redeem"
+
+  # Échappement minimal pour rester dans un JSON valide (le format de code est
+  # borné à un alphabet restreint côté serveur, mais on n'assume rien ici).
+  local ESCAPED
+  ESCAPED=$(printf '%s' "$CODE" | sed 's/\\/\\\\/g; s/"/\\"/g')
+
+  log_step "Validation du code d'achat..."
+
+  local RAW
+  if ! RAW=$(curl -sS --connect-timeout 10 --max-time 30 \
+        -H 'Content-Type: application/json' \
+        -d "{\"code\":\"${ESCAPED}\"}" \
+        -w '\n%{http_code}' \
+        "$URL" 2>&1); then
+    log_error "Impossible de contacter le serveur de validation (${URL})."
+    exit 1
+  fi
+
+  local HTTP_CODE BODY
+  HTTP_CODE=$(echo "$RAW" | tail -n1)
+  BODY=$(echo "$RAW" | sed '$d')
+
+  if ! echo "$BODY" | grep -q '"ok"[[:space:]]*:[[:space:]]*true'; then
+    local ERR_MSG
+    ERR_MSG=$(echo "$BODY" | sed -n 's/.*"error"[[:space:]]*:[[:space:]]*"\([^"]*\)".*/\1/p')
+    log_error "Code refusé : ${ERR_MSG:-réponse inattendue du serveur (HTTP ${HTTP_CODE})}"
+    exit 1
+  fi
+
+  local TOKEN
+  TOKEN=$(echo "$BODY" | sed -n 's/.*"downloadToken"[[:space:]]*:[[:space:]]*"\([^"]*\)".*/\1/p')
+  if [ -z "$TOKEN" ]; then
+    log_error "Réponse du serveur invalide (downloadToken manquant, HTTP ${HTTP_CODE})."
+    exit 1
+  fi
+
+  log_ok "Code validé"
+  echo "${ADA_BASE_URL}/api/download/file?token=${TOKEN}"
+}
+
 get_download_url() {
   # Tente d'obtenir l'URL de la dernière release GitHub
   local API_URL="https://api.github.com/repos/${GITHUB_REPO}/releases/latest"
@@ -116,9 +184,14 @@ get_download_url() {
     fi
   fi
 
-  # Secours : zip hébergé sur ada-web
-  log_warn "GitHub API inaccessible → utilisation de l'URL de secours"
-  echo "$FALLBACK_ZIP_URL"
+  # Pas de fallback silencieux : le repo GitHub est privé, cette voie échoue
+  # systématiquement dans ce cas. On échoue fort avec une remédiation claire.
+  log_error "Téléchargement direct indisponible : impossible de récupérer une release GitHub publique (${GITHUB_REPO})."
+  echo "  Deux options :" >&2
+  echo "   1. Rendre la release GitHub publique et accessible en anonyme." >&2
+  echo "   2. Fournir un code d'achat via la variable ADA_CODE :" >&2
+  echo "        ADA_CODE=XXXX-XXXX-XXXX-XXXX curl -fsSL ${ADA_BASE_URL}/install.sh | bash" >&2
+  exit 1
 }
 
 download_and_extract() {
@@ -194,7 +267,11 @@ main() {
   echo
 
   local DOWNLOAD_URL
-  DOWNLOAD_URL=$(get_download_url)
+  if [ -n "$ADA_CODE" ]; then
+    DOWNLOAD_URL=$(redeem_code_for_download_url "$ADA_CODE")
+  else
+    DOWNLOAD_URL=$(get_download_url)
+  fi
 
   local EXTRACTED_DIR
   EXTRACTED_DIR=$(download_and_extract "$DOWNLOAD_URL")

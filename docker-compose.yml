@@ -19,6 +19,19 @@ services:
     environment:
       NODE_ENV: production
       PORT: 3002
+      # Base SQLite du pool de codes → volume persistant ci-dessous
+      CODES_DB_PATH: /app/data/codes.db
+      # Archive hors de public/, servie uniquement via /api/download/file
+      DOWNLOAD_FILE_PATH: /app/private-assets/ADA-v7.zip
+      DOWNLOAD_TOKEN_TTL_SECONDS: 60
+      # Fournie par l'environnement (Coolify). Vide par défaut : les endpoints
+      # internes refusent alors toute requête (fail-closed). Les endpoints
+      # publics (redeem / file) fonctionnent sans cette clé.
+      INTERNAL_API_KEY: ${INTERNAL_API_KEY:-}
+    volumes:
+      # Persiste le pool de codes entre les redéploiements.
+      # ⚠️ Sans ce volume, les 100 000 codes sont perdus à chaque déploiement.
+      - ada-web-data:/app/data
     ports:
       - "3002:3002"
     healthcheck:
@@ -27,3 +40,8 @@ services:
       timeout: 5s
       retries: 3
       start_period: 20s
+
+volumes:
+  # Contient codes.db (+ fichiers WAL). À NE PAS supprimer : détruire ce volume
+  # supprime le pool de codes et révoque les codes déjà transmis aux clients.
+  ada-web-data:

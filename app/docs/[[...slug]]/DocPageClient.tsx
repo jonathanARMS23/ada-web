@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { useEffect, useRef, useState } from 'react'
 import { useParams } from 'next/navigation'
 import { DocsLayout } from '@/components/docs/DocsLayout'
+import { DownloadGate } from '@/components/docs/DownloadModal'
 import { ADRS } from '@/lib/adrs'
 import { NAV_ITEMS } from '@/lib/docs-nav'
 
@@ -138,10 +139,10 @@ function DocHome() {
               <svg width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
               Get Started
             </Link>
-            <a href="/ADA-v7.zip" download="ADA-v7.zip" className="btn-g" style={{ padding: '11px 22px', borderRadius: 10, fontSize: 14, fontWeight: 500, textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: 7 }}>
+            <DownloadGate className="btn-g" style={{ padding: '11px 22px', borderRadius: 10, fontSize: 14, fontWeight: 500, textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: 7, cursor: 'pointer', fontFamily: 'inherit' }}>
               <svg width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M12 5v14M5 12l7 7 7-7"/><line x1="3" y1="21" x2="21" y2="21"/></svg>
               Download v7.3.0
-            </a>
+            </DownloadGate>
             <Link href="/docs/arch-overview" className="btn-g" style={{ padding: '11px 22px', borderRadius: 10, fontSize: 14, fontWeight: 500 }}>
               <svg width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
               Architecture
@@ -219,22 +220,21 @@ function DocInstallation() {
             ZIP · 6,1 Mo · Node.js 22+ requis
           </div>
         </div>
-        <a
-          href="/ADA-v7.zip"
-          download="ADA-v7.zip"
+        <DownloadGate
           style={{
             display: 'inline-flex', alignItems: 'center', gap: 8,
             padding: '10px 20px', borderRadius: 9,
             background: 'var(--primary)', color: '#fff',
             fontWeight: 600, fontSize: 14, textDecoration: 'none',
             flexShrink: 0, transition: 'opacity 0.15s',
+            border: 'none', cursor: 'pointer', fontFamily: 'inherit',
           }}
         >
           <svg width="15" height="15" fill="none" stroke="currentColor" strokeWidth="2.2" viewBox="0 0 24 24">
             <path d="M12 5v14M5 12l7 7 7-7"/><line x1="3" y1="21" x2="21" y2="21"/>
           </svg>
           Télécharger ADA-v7.zip
-        </a>
+        </DownloadGate>
       </div>
 
       <h2>Prérequis</h2>
@@ -266,21 +266,20 @@ nvm install 22 && nvm use 22`}</code></pre>
             <p style={{ color: 'var(--text-s)', fontSize: 14, marginBottom: 16 }}>
               Utilisez le bouton ci-dessus pour télécharger l'archive officielle.
             </p>
-            <a
-              href="/ADA-v7.zip"
-              download="ADA-v7.zip"
+            <DownloadGate
               style={{
                 display: 'inline-flex', alignItems: 'center', gap: 8,
                 padding: '9px 18px', borderRadius: 8,
                 background: 'var(--primary)', color: '#fff',
                 fontWeight: 600, fontSize: 13, textDecoration: 'none',
+                border: 'none', cursor: 'pointer', fontFamily: 'inherit',
               }}
             >
               <svg width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2.2" viewBox="0 0 24 24">
                 <path d="M12 5v14M5 12l7 7 7-7"/><line x1="3" y1="21" x2="21" y2="21"/>
               </svg>
               Télécharger ADA-v7.zip
-            </a>
+            </DownloadGate>
           </div>
         </div>
 

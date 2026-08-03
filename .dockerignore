@@ -3,3 +3,7 @@ node_modules
 .git
 .env*
 *.md
+
+# base SQLite locale : ne jamais la copier dans l'image
+# (le runtime utilise le volume persistant monté sur /app/data)
+data
