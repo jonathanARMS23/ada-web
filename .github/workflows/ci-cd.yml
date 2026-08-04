@@ -8,8 +8,12 @@
 #  ┌─ deploy ───────────────────────────────────────────────────────────┐
 #  │  trigger Coolify via API (uniquement push sur main après quality)   │
 #  │  Secrets requis dans le dépôt GitHub :                              │
-#  │    COOLIFY_HOST      — URL de votre instance (ex: coolify.domain.com)│
-#  │    COOLIFY_TOKEN     — Token API Coolify (Settings → API Keys)      │
+#  │    COOLIFY_HOST      — host:port (ex: 95.216.187.73:8000). L'API   │
+#  │                        Coolify sur ce port répond en HTTP simple,   │
+#  │                        pas de TLS devant — d'où le http:// codé en  │
+#  │                        dur ci-dessous, ne pas basculer en https.    │
+#  │    COOLIFY_TOKEN     — Token API Coolify, scope "deploy" uniquement │
+#  │                        (Settings → API Keys) — jamais root/write.   │
 #  │    COOLIFY_APP_UUID  — UUID de ada-web dans Coolify                 │
 #  └────────────────────────────────────────────────────────────────────┘
 # ══════════════════════════════════════════════════════════════════════════════
@@ -66,7 +70,7 @@ jobs:
         run: |
           RESPONSE=$(curl -s -w "\n%{http_code}" \
             -H "Authorization: Bearer ${{ secrets.COOLIFY_TOKEN }}" \
-            "https://${{ secrets.COOLIFY_HOST }}/api/v1/deploy?uuid=${{ secrets.COOLIFY_APP_UUID }}&force=false")
+            "http://${{ secrets.COOLIFY_HOST }}/api/v1/deploy?uuid=${{ secrets.COOLIFY_APP_UUID }}&force=false")
           HTTP_CODE=$(echo "$RESPONSE" | tail -n1)
           BODY=$(echo "$RESPONSE" | head -n -1)
           echo "Status : $HTTP_CODE"
