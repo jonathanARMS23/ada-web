@@ -10,7 +10,7 @@ export function CTASection() {
           <span className="grad">Orchestrez vos agents.<br />Maintenant.</span>
         </h2>
         <p className="cta-sub">Une commande pour démarrer. Zéro config. Mémoire active dès le premier run.</p>
-        <div className="cta-cmd">$ ada run "ma première feature"</div>
+        <div className="cta-cmd">$ ada run &quot;ma première feature&quot;</div>
         <br />
         <div style={{ display: 'flex', gap: 14, justifyContent: 'center', flexWrap: 'wrap', marginTop: 32 }}>
           <Link href="/docs" className="btn-p">Voir la documentation →</Link>

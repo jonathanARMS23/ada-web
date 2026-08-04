@@ -202,7 +202,7 @@ function DocInstallation() {
       <div className="breadcrumb">Quick Start <span>›</span> Installation</div>
       <div className="page-header">
         <h1>Installation</h1>
-        <p>ADA s'installe en 4 étapes. Téléchargez l'archive officielle ci-dessous pour commencer.</p>
+        <p>ADA s&apos;installe en 4 étapes. Téléchargez l&apos;archive officielle ci-dessous pour commencer.</p>
       </div>
 
       {/* Download banner */}
@@ -252,7 +252,7 @@ nvm install 22 && nvm use 22`}</code></pre>
         <span className="callout-icon">⚠</span>
         <div className="callout-body">
           <strong>Node 20 LTS non supporté</strong>
-          <p>Node.js 20 LTS n'inclut pas <code>node:sqlite</code>. La mise à jour vers Node 22 est obligatoire.</p>
+          <p>Node.js 20 LTS n&apos;inclut pas <code>node:sqlite</code>. La mise à jour vers Node 22 est obligatoire.</p>
         </div>
       </div>
 
@@ -262,9 +262,9 @@ nvm install 22 && nvm use 22`}</code></pre>
         <div className="doc-step">
           <div className="step-num">1</div>
           <div className="step-body">
-            <h3>Télécharger l'archive</h3>
+            <h3>Télécharger l&apos;archive</h3>
             <p style={{ color: 'var(--text-s)', fontSize: 14, marginBottom: 16 }}>
-              Utilisez le bouton ci-dessus pour télécharger l'archive officielle.
+              Utilisez le bouton ci-dessus pour télécharger l&apos;archive officielle.
             </p>
             <DownloadGate
               style={{
@@ -297,7 +297,7 @@ cd ADA-v7`}</code></pre>
         <div className="doc-step">
           <div className="step-num">3</div>
           <div className="step-body">
-            <h3>Lancer l'installation</h3>
+            <h3>Lancer l&apos;installation</h3>
             <p style={{ color: 'var(--text-s)', fontSize: 14, marginBottom: 12 }}>
               Le flag <code>--with-server</code> installe également ada-api et ada-ui en plus du CLI ada-core.
             </p>
@@ -331,7 +331,7 @@ cd ADA-v7`}</code></pre>
         <span className="callout-icon">✓</span>
         <div className="callout-body">
           <strong>ADA est prêt</strong>
-          <p>L'interface s'ouvre automatiquement sur <code>http://localhost:7777</code>. Pour découvrir toutes les commandes disponibles, consultez la page <a href="/docs/commands" style={{ color: 'var(--primary)' }}>Commandes ADA</a>.</p>
+          <p>L&apos;interface s&apos;ouvre automatiquement sur <code>http://localhost:7777</code>. Pour découvrir toutes les commandes disponibles, consultez la page <Link href="/docs/commands" style={{ color: 'var(--primary)' }}>Commandes ADA</Link>.</p>
         </div>
       </div>
 
@@ -882,7 +882,7 @@ function DocReasoningBank() {
       <div className="breadcrumb">Concepts <span>›</span> ReasoningBank</div>
       <div className="page-header">
         <h1>ReasoningBank</h1>
-        <p>ADA's persistent memory layer. Stores execution trajectories, extracted insights, and Thompson Sampling Beta distributions in native SQLite (node:sqlite).</p>
+        <p>ADA&apos;s persistent memory layer. Stores execution trajectories, extracted insights, and Thompson Sampling Beta distributions in native SQLite (node:sqlite).</p>
       </div>
 
       <h2>Initialization</h2>
@@ -1468,7 +1468,7 @@ function DocRelease730() {
         <div className="callout-body">
           <strong>Feature headline : AI Engineering Loop</strong>
           <p>
-            Remplace le cycle humain "crée feature → erreur → corrige → review" par une boucle autonome :
+            Remplace le cycle humain &quot;crée feature → erreur → corrige → review&quot; par une boucle autonome :
             les erreurs réelles (TypeScript, tests, runtime) sont parsées, structurées et injectées automatiquement
             dans le re-prompt de l&apos;agent. Inspiré de SWE-bench (+30–40% taux de succès).
           </p>
@@ -1519,9 +1519,9 @@ function DocRelease730() {
         >
           GitHub Release →
         </a>
-        <a href="/docs/concepts-engineering-loop" className="btn-p" style={{ fontSize: 13, padding: '8px 16px' }}>
+        <Link href="/docs/concepts-engineering-loop" className="btn-p" style={{ fontSize: 13, padding: '8px 16px' }}>
           Docs : AI Engineering Loop →
-        </a>
+        </Link>
       </div>
     </div>
   )
@@ -1938,7 +1938,7 @@ function DocArchMemory() {
       <div className="breadcrumb">Architecture <span>›</span> Memory & Graphify</div>
       <div className="page-header">
         <h1>Memory & Graphify</h1>
-        <p>ADA's memory system combines ReasoningBank (SQLite), Smart Retrieval (BM25+RRF+MMR), Graphify (knowledge graph), and optional Obsidian integration.</p>
+        <p>ADA&apos;s memory system combines ReasoningBank (SQLite), Smart Retrieval (BM25+RRF+MMR), Graphify (knowledge graph), and optional Obsidian integration.</p>
       </div>
 
       <h2>ReasoningBank Architecture (post-refactor)</h2>
@@ -2578,7 +2578,7 @@ function DocDeployServer() {
       <div className="breadcrumb">Deployment <span>›</span> Server / Docker</div>
       <div className="page-header">
         <h1>Server / Docker Deployment</h1>
-        <p>Server mode runs ADA on a VPS or cloud instance with Docker Compose, Nginx reverse proxy, and Let's Encrypt SSL. JWT auth mandatory.</p>
+        <p>Server mode runs ADA on a VPS or cloud instance with Docker Compose, Nginx reverse proxy, and Let&apos;s Encrypt SSL. JWT auth mandatory.</p>
       </div>
 
       <h2>Server Prerequisites</h2>

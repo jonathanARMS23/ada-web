@@ -6,6 +6,7 @@ import { NAV_ITEMS } from '@/lib/docs-nav'
 export function SearchModal({ open, onClose }: { open: boolean; onClose: () => void }) {
   const [query, setQuery] = useState('')
   const [idx, setIdx] = useState(0)
+  const [prevOpen, setPrevOpen] = useState(open)
   const inputRef = useRef<HTMLInputElement>(null)
   const router = useRouter()
 
@@ -17,11 +18,20 @@ export function SearchModal({ open, onClose }: { open: boolean; onClose: () => v
       ).slice(0, 8)
     : NAV_ITEMS.slice(0, 8)
 
-  useEffect(() => {
+  // Réinitialise la recherche/index lors de la transition false→true de `open`.
+  // Ajustement d'état pendant le rendu (pattern React officiel), pas de setState dans un effect.
+  if (open !== prevOpen) {
+    setPrevOpen(open)
     if (open) {
       setQuery('')
       setIdx(0)
-      setTimeout(() => inputRef.current?.focus(), 50)
+    }
+  }
+
+  useEffect(() => {
+    if (open) {
+      const t = setTimeout(() => inputRef.current?.focus(), 50)
+      return () => clearTimeout(t)
     }
   }, [open])
 

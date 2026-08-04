@@ -5,12 +5,13 @@ import { SearchModal } from './SearchModal'
 
 export function Topbar({ onMenuClick }: { onMenuClick?: () => void }) {
   const [searchOpen, setSearchOpen] = useState(false)
-  const [isLight, setIsLight] = useState(false)
+  const [isLight, setIsLight] = useState(() => {
+    if (typeof window === 'undefined') return false
+    return localStorage.getItem('ada-theme') === 'light'
+  })
 
   useEffect(() => {
-    const saved = localStorage.getItem('ada-theme')
-    if (saved === 'light') {
-      setIsLight(true)
+    if (localStorage.getItem('ada-theme') === 'light') {
       document.documentElement.classList.add('light')
     }
   }, [])

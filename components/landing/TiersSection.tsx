@@ -17,10 +17,10 @@ export function TiersSection() {
       <div className="wrap">
         <div className="sec-label" style={{ justifyContent: 'center' }}>✦ Sélection de modèle</div>
         <h2 className="sec-h2">Trois tiers. Un seul optimal.</h2>
-        <p className="sec-sub">Thompson Sampling choisit automatiquement le tier selon la complexité détectée et l'historique des runs.</p>
+        <p className="sec-sub">Thompson Sampling choisit automatiquement le tier selon la complexité détectée et l&apos;historique des runs.</p>
         <div style={{ overflowX: 'auto' }}>
           <table className="tier-table">
-            <thead><tr><th>Tier</th><th>Modèle</th><th>Cas d'usage</th><th>Coût relatif</th></tr></thead>
+            <thead><tr><th>Tier</th><th>Modèle</th><th>Cas d&apos;usage</th><th>Coût relatif</th></tr></thead>
             <tbody>
               {TIERS.map(t => (
                 <React.Fragment key={t.id}>
