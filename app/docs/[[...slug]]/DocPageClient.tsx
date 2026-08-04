@@ -141,7 +141,7 @@ function DocHome() {
             </Link>
             <DownloadGate className="btn-g" style={{ padding: '11px 22px', borderRadius: 10, fontSize: 14, fontWeight: 500, textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: 7, cursor: 'pointer', fontFamily: 'inherit' }}>
               <svg width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M12 5v14M5 12l7 7 7-7"/><line x1="3" y1="21" x2="21" y2="21"/></svg>
-              Download v7.3.0
+              Download v7.4.0
             </DownloadGate>
             <Link href="/docs/arch-overview" className="btn-g" style={{ padding: '11px 22px', borderRadius: 10, fontSize: 14, fontWeight: 500 }}>
               <svg width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
@@ -173,7 +173,7 @@ function DocHome() {
           <div className="metric"><CountUp to={42} className="metric-value" /><span className="metric-label">Test Suites</span></div>
           <div className="metric"><CountUp to={964} className="metric-value" /><span className="metric-label">Assertions</span></div>
           <div className="metric"><CountUp to={107} className="metric-value" /><span className="metric-label">Benchmarks</span></div>
-          <div className="metric"><span className="metric-value" style={{ fontSize: 22 }}>v7.3.0</span><span className="metric-label">Current Version</span></div>
+          <div className="metric"><span className="metric-value" style={{ fontSize: 22 }}>v7.4.0</span><span className="metric-label">Current Version</span></div>
         </div>
       </div>
     </>
@@ -214,10 +214,10 @@ function DocInstallation() {
       }}>
         <div>
           <div style={{ fontSize: 15, fontWeight: 600, color: 'var(--text)', marginBottom: 4 }}>
-            ADA v7.3.0 — Archive officielle
+            ADA v7.4.0 — Archive officielle
           </div>
           <div style={{ fontSize: 13, color: 'var(--text-m)' }}>
-            ZIP · 6,1 Mo · Node.js 22+ requis
+            ZIP · 13,3 Mo · Node.js 22+ requis
           </div>
         </div>
         <DownloadGate
@@ -338,7 +338,7 @@ cd ADA-v7`}</code></pre>
       <h2>Vérification</h2>
       <div className="code-block">
         <pre><code>{`ada --version
-# → ADA v7.3.0 (node:sqlite ✓, node:crypto ✓, node:http ✓)
+# → ADA v7.4.0 (node:sqlite ✓, node:crypto ✓, node:http ✓)
 
 ada status
 # → ada-core  ✅  running
@@ -391,11 +391,11 @@ function DocCommands() {
           cmd: 'ada update',
           desc: 'Met à jour ADA vers la dernière version disponible. Télécharge l\'archive, applique les migrations SQLite, redémarre les services.',
           example: `ada update
-# → Checking latest version... v7.3.0 available
-# → Downloading ADA-v7.3.0.zip...
+# → Checking latest version... v7.4.0 available
+# → Downloading ADA-v7.4.0.zip...
 # → Applying migrations...
 # → Restarting services...
-# → ✓ Updated to v7.3.0`,
+# → ✓ Updated to v7.4.0`,
           flags: [
             { f: '--dry-run', d: 'Affiche la version disponible sans installer' },
             { f: '--no-restart', d: 'Met à jour les fichiers sans redémarrer les services' },
