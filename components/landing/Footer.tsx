@@ -11,7 +11,7 @@ export function Footer() {
             <Image src="/ada-logo.png" alt="ADA" fill style={{ objectFit: 'cover', objectPosition: 'center' }} />
           </div>
           <div>
-            <span style={{ fontWeight: 600, color: 'var(--text-s)' }}>ADA v7.4.0</span>
+            <span style={{ fontWeight: 600, color: 'var(--text-s)' }}>ADA v7.5.0</span>
             <span style={{ color: 'var(--text-m)', marginLeft: 6 }}>— Orchestrate. Learn. Ship.</span>
           </div>
         </div>
@@ -19,7 +19,7 @@ export function Footer() {
           <Link href="/docs">Documentation</Link>
           <Link href="/docs/cli-run">CLI Reference</Link>
           <Link href="/docs/adr-001">ADRs</Link>
-          <Link href="/docs/release-720">Releases</Link>
+          <Link href="/docs/release-750">Releases</Link>
         </div>
       </div>
 

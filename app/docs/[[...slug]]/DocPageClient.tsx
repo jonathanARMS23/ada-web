@@ -141,7 +141,7 @@ function DocHome() {
             </Link>
             <DownloadGate className="btn-g" style={{ padding: '11px 22px', borderRadius: 10, fontSize: 14, fontWeight: 500, textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: 7, cursor: 'pointer', fontFamily: 'inherit' }}>
               <svg width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M12 5v14M5 12l7 7 7-7"/><line x1="3" y1="21" x2="21" y2="21"/></svg>
-              Download v7.4.0
+              Download v7.5.0
             </DownloadGate>
             <Link href="/docs/arch-overview" className="btn-g" style={{ padding: '11px 22px', borderRadius: 10, fontSize: 14, fontWeight: 500 }}>
               <svg width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
@@ -170,10 +170,10 @@ function DocHome() {
 
       <div className="page-section">
         <div className="metrics-strip">
-          <div className="metric"><CountUp to={42} className="metric-value" /><span className="metric-label">Test Suites</span></div>
-          <div className="metric"><CountUp to={964} className="metric-value" /><span className="metric-label">Assertions</span></div>
-          <div className="metric"><CountUp to={107} className="metric-value" /><span className="metric-label">Benchmarks</span></div>
-          <div className="metric"><span className="metric-value" style={{ fontSize: 22 }}>v7.4.0</span><span className="metric-label">Current Version</span></div>
+          <div className="metric"><CountUp to={92} className="metric-value" /><span className="metric-label">Test Suites</span></div>
+          <div className="metric"><CountUp to={2009} className="metric-value" /><span className="metric-label">Assertions</span></div>
+          <div className="metric"><CountUp to={36} className="metric-value" /><span className="metric-label">CLI Commands</span></div>
+          <div className="metric"><span className="metric-value" style={{ fontSize: 22 }}>v7.5.0</span><span className="metric-label">Current Version</span></div>
         </div>
       </div>
     </>
@@ -214,10 +214,10 @@ function DocInstallation() {
       }}>
         <div>
           <div style={{ fontSize: 15, fontWeight: 600, color: 'var(--text)', marginBottom: 4 }}>
-            ADA v7.4.0 — Archive officielle
+            ADA v7.5.0 — Archive officielle
           </div>
           <div style={{ fontSize: 13, color: 'var(--text-m)' }}>
-            ZIP · 13,3 Mo · Node.js 22+ requis
+            ZIP · 14,9 Mo · Node.js 22+ requis
           </div>
         </div>
         <DownloadGate
@@ -338,7 +338,7 @@ cd ADA-v7`}</code></pre>
       <h2>Vérification</h2>
       <div className="code-block">
         <pre><code>{`ada --version
-# → ADA v7.4.0 (node:sqlite ✓, node:crypto ✓, node:http ✓)
+# → ADA v7.5.0 (node:sqlite ✓, node:crypto ✓, node:http ✓)
 
 ada status
 # → ada-core  ✅  running
@@ -391,11 +391,11 @@ function DocCommands() {
           cmd: 'ada update',
           desc: 'Met à jour ADA vers la dernière version disponible. Télécharge l\'archive, applique les migrations SQLite, redémarre les services.',
           example: `ada update
-# → Checking latest version... v7.4.0 available
-# → Downloading ADA-v7.4.0.zip...
+# → Checking latest version... v7.5.0 available
+# → Downloading ADA-v7.5.0.zip...
 # → Applying migrations...
 # → Restarting services...
-# → ✓ Updated to v7.4.0`,
+# → ✓ Updated to v7.5.0`,
           flags: [
             { f: '--dry-run', d: 'Affiche la version disponible sans installer' },
             { f: '--no-restart', d: 'Met à jour les fichiers sans redémarrer les services' },
@@ -639,7 +639,7 @@ function DocConfiguration() {
       <h2>Full settings.json</h2>
       <div className="code-block">
         <pre><code>{`{
-  "version": "7.2.0",
+  "version": "7.5.0",
   "routing": {
     "defaultMode": "solo",
     "maxAgents": 3,
@@ -684,7 +684,7 @@ function DocConfiguration() {
               { key: 'routing.defaultMode', type: '"solo" | "pipeline"', desc: 'Default mode if classify returns no strong signal. Solo = 1 agent.' },
               { key: 'routing.maxAgents', type: 'number', desc: 'Hard limit on parallel agents. Prevents API quota overruns on complex pipelines.' },
               { key: 'thompsonMinSamples', type: 'number', desc: 'Minimum runs before Thompson Sampling replaces random cold-start routing.' },
-              { key: 'reasoningBank.retrievalStrategy', type: '"tfidf" | "bm25" | "rrfmmr"', desc: 'rrfmmr (RRF + MMR) gives best retrieval quality (+22%).' },
+              { key: 'reasoningBank.retrievalStrategy', type: '"tfidf" | "bm25" | "rrfmmr"', desc: 'rrfmmr (RRF + MMR) gives the best retrieval quality, at ~5ms overhead per query — no external ML dependency.' },
               { key: 'plugins.hmacVerify', type: 'boolean', desc: 'Disable only during plugin development. Never disable in production.' },
             ].map(f => (
               <tr key={f.key}>
@@ -1184,7 +1184,7 @@ function DocAgents() {
       <div className="breadcrumb">Agents &amp; Routing <span>›</span> Agent Profiles</div>
       <div className="page-header">
         <h1>Agent Profiles</h1>
-        <p>ADA includes 15+ specialized agents. Each agent is an optimized Claude Code profile for a specific domain.</p>
+        <p>ADA ships 40+ core specialized agents auto-routed by domain (sample below), plus 60+ advanced orchestration agents (swarm, byzantine/raft consensus, hive-mind) available on explicit request.</p>
       </div>
 
       <div className="table-wrap">
@@ -1444,6 +1444,161 @@ function DocADR({ adr }: { adr: typeof ADRS[0] }) {
   )
 }
 
+function DocRelease750() {
+  return (
+    <div className="page-section">
+      <div className="breadcrumb">Releases <span>›</span> v7.5.0</div>
+      <div className="page-header">
+        <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 12 }}>
+          <span style={{ fontFamily: 'var(--font-jetbrains, monospace)', fontSize: 12, color: 'var(--text-m)' }}>2026-08-13</span>
+          <span className="latest-badge">Latest</span>
+        </div>
+        <h1>v7.5.0 — Adaptive Routing Bascule (ADR-023)</h1>
+      </div>
+
+      <div className="metrics-strip" style={{ marginBottom: 32 }}>
+        <div className="metric"><CountUp to={92} className="metric-value" /><span className="metric-label">Test Suites</span></div>
+        <div className="metric"><CountUp to={2009} className="metric-value" /><span className="metric-label">Assertions</span></div>
+        <div className="metric"><CountUp to={7} className="metric-value" /><span className="metric-label">Commits since v7.4.0</span></div>
+        <div className="metric"><span className="metric-value" style={{ fontSize: 22 }}>0ms</span><span className="metric-label">Zero Dependencies</span></div>
+      </div>
+
+      <div className="callout callout-info" style={{ marginBottom: 28 }}>
+        <span className="callout-icon">⟳</span>
+        <div className="callout-body">
+          <strong>Feature headline : bascule adaptative étendue (ADR-023 étapes 4-5)</strong>
+          <p>
+            Le pipeline <code>review</code> passe en bascule adaptative par flag, avec une gouvernance
+            de coût dédiée aux délégations adaptatives. L&apos;extension est ensuite étendue aux 6 pipelines
+            restants — la mesure de l&apos;écart réel sur ces 6 pipelines n&apos;est pas encore complétée,
+            à surveiller après cette release.
+          </p>
+        </div>
+      </div>
+
+      {[
+        { type: 'New', color: 'var(--green)', marker: '+', items: [
+          'ADR-023 étape 4 — gouvernance de coût des délégations adaptatives',
+          'ADR-023 étape 5 — bascule adaptative du pipeline review par flag',
+          'Extension de la bascule adaptative aux 6 pipelines restants',
+        ]},
+        { type: 'Fixed', color: 'var(--red)', marker: '✓', items: [
+          'bench-v2 : exclut les entrées superseded du calcul de buildReport',
+          'Test périmé sdk-interactive-session.spec.ts corrigé (fixture UUID pour --resume) — ne concernait pas le code produit',
+        ]},
+        { type: 'Improved', color: 'var(--amber)', marker: '↑', items: [
+          'Rattrapage CHANGELOG.md : entrées 7.3.0 et 7.4.0 précédemment manquantes',
+          'CLAUDE.md (doctrine de routing) : tier 2 corrigé vers claude-sonnet-5',
+        ]},
+      ].map(section => (
+        <div key={section.type} className="changelog-group">
+          <h3>
+            <span className="chip" style={{ background: `${section.color}22`, color: section.color, border: `1px solid ${section.color}44` }}>{section.type}</span>
+          </h3>
+          <ul>
+            {section.items.map((item, i) => (
+              <li key={i}>
+                <span style={{ color: section.color, flexShrink: 0 }}>{section.marker}</span>
+                {item}
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+
+      <div style={{ marginTop: 32, display: 'flex', gap: 12 }}>
+        <a
+          href="https://github.com/jonathanARMS23/AI-Dev-Assistant/releases/tag/v7.5.0"
+          target="_blank" rel="noreferrer"
+          className="btn-g" style={{ fontSize: 13, padding: '8px 16px' }}
+        >
+          GitHub Release →
+        </a>
+      </div>
+    </div>
+  )
+}
+
+function DocRelease740() {
+  return (
+    <div className="page-section">
+      <div className="breadcrumb">Releases <span>›</span> v7.4.0</div>
+      <div className="page-header">
+        <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 12 }}>
+          <span style={{ fontFamily: 'var(--font-jetbrains, monospace)', fontSize: 12, color: 'var(--text-m)' }}>2026-08-03</span>
+        </div>
+        <h1>v7.4.0 — Commercial Licensing &amp; Model Refactor</h1>
+      </div>
+
+      <div className="metrics-strip" style={{ marginBottom: 32 }}>
+        <div className="metric"><CountUp to={87} className="metric-value" /><span className="metric-label">Test Suites</span></div>
+        <div className="metric"><CountUp to={1600} className="metric-value" /><span className="metric-label">Assertions</span></div>
+        <div className="metric"><CountUp to={22} className="metric-value" /><span className="metric-label">Commits since v7.3.0</span></div>
+        <div className="metric"><span className="metric-value" style={{ fontSize: 22 }}>0ms</span><span className="metric-label">Zero Dependencies</span></div>
+      </div>
+
+      <div className="callout callout-info" style={{ marginBottom: 28 }}>
+        <span className="callout-icon">⟳</span>
+        <div className="callout-body">
+          <strong>Feature headline : licence commerciale propriétaire + Claude Sonnet 5</strong>
+          <p>
+            ADA passe en distribution commerciale (licence propriétaire, README repositionné, état runtime purgé du dépôt).
+            Les IDs de modèles et le pricing sont désormais centralisés dans une source unique (<code>coordinator/models.js</code>),
+            qui ajoute Claude Sonnet 5 et corrige des tarifs Opus/Haiku obsolètes.
+          </p>
+        </div>
+      </div>
+
+      {[
+        { type: 'New', color: 'var(--green)', marker: '+', items: [
+          'Licence commerciale propriétaire (Phase 0) — voir LICENSE',
+          'Exécution directe du tier-0 codemod dans `ada run` (transform déterministe, zéro appel LLM)',
+          'Gate d\'injection mémoire à deux étages sur le recall ReasoningBank',
+          'Flywheel anti-régression recall — ancres figées, baseline monotone, policy réversible',
+          'Garde witness anti-régression + lexer shell segmenté + audit agents + garde "never-worse"',
+          '`ada team reap` : TTL cleanup, downgrade solo/pipeline, fallback profil générique',
+        ]},
+        { type: 'Improved', color: 'var(--amber)', marker: '↑', items: [
+          'IDs de modèles et pricing centralisés dans `coordinator/models.js` — ajout de Claude Sonnet 5, correction de tarifs Opus/Haiku obsolètes',
+          'Installeur rendu distribuable à des clients externes ; `ada update`/`ada install` unifiés, `install-remote.sh` supprimé',
+          'Installeur : préserve `pipelines.json` personnalisé + propage `permissions.deny`',
+        ]},
+        { type: 'Fixed', color: 'var(--red)', marker: '✓', items: [
+          'Sécurité : path traversal fermé dans le retry de l\'AI Engineering Loop ; re-scan/double-comptage de télémétrie stoppé',
+          'Sécurité : allowlist Bash restreinte, hooks câblés fail-closed',
+          'WAL + busy_timeout SQLite pour les écritures concurrentes sur le ReasoningBank',
+          'Résolution de chemin à deux essais pour le layout runtime (witness)',
+          'Le stub SQL de bench préserve la qualification de schéma',
+        ]},
+      ].map(section => (
+        <div key={section.type} className="changelog-group">
+          <h3>
+            <span className="chip" style={{ background: `${section.color}22`, color: section.color, border: `1px solid ${section.color}44` }}>{section.type}</span>
+          </h3>
+          <ul>
+            {section.items.map((item, i) => (
+              <li key={i}>
+                <span style={{ color: section.color, flexShrink: 0 }}>{section.marker}</span>
+                {item}
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+
+      <div style={{ marginTop: 32, display: 'flex', gap: 12 }}>
+        <a
+          href="https://github.com/jonathanARMS23/AI-Dev-Assistant/releases/tag/v7.4.0"
+          target="_blank" rel="noreferrer"
+          className="btn-g" style={{ fontSize: 13, padding: '8px 16px' }}
+        >
+          GitHub Release →
+        </a>
+      </div>
+    </div>
+  )
+}
+
 function DocRelease730() {
   return (
     <div className="page-section">
@@ -1451,7 +1606,6 @@ function DocRelease730() {
       <div className="page-header">
         <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 12 }}>
           <span style={{ fontFamily: 'var(--font-jetbrains, monospace)', fontSize: 12, color: 'var(--text-m)' }}>2026-06-30</span>
-          <span className="latest-badge">Latest</span>
         </div>
         <h1>v7.3.0 — AI Engineering Loop</h1>
       </div>
@@ -1717,13 +1871,13 @@ function DocRelease720() {
       {[
         { type: 'New', color: 'var(--green)', marker: '+', items: [
           'ADR-014: Graphify Knowledge Graph — entities, relations, clusters in SQLite',
-          'SmartRetrieval RRF+MMR enabled by default (+22% retrieval quality)',
+          'SmartRetrieval RRF+MMR enabled by default (better retrieval quality, ~5ms overhead)',
           'ada bank seed-conventions — automatic seeding from CLAUDE.md',
           'Dashboard: real-time Thompson Sampling graphs via SSE',
           'Plugin SDK: hot-reload in development mode',
         ]},
         { type: 'Improved', color: 'var(--accent)', marker: '↑', items: [
-          'Cold start reduced from 340ms to 180ms (conventions cache)',
+          'Cold start latency reduced via conventions cache',
           'ReasoningBank: BM25 index rebuilt incrementally (vs full rebuild)',
         ]},
         { type: 'Fixed', color: 'var(--amber)', marker: '~', items: [
@@ -2112,7 +2266,7 @@ function DocSmartRetrieval() {
               { m: 'Candidates scanned', b: '5 000', a: '500 (RETRIEVE_CAP)' },
               { m: 'BM25 queries', b: '1', a: '3 (expand × 3)' },
               { m: 'Result diversity', b: 'low', a: 'high (MMR λ=0.6)' },
-              { m: 'Retrieval quality (MRR@5)', b: '0.58', a: '0.74 (+27%)' },
+              { m: 'Overhead per query', b: '—', a: '~5ms (measured on 200 trajectories)' },
               { m: 'Timeout guard', b: 'none', a: '2s hard cap' },
             ].map(r => <tr key={r.m}><td>{r.m}</td><td style={{color:'var(--text-m)'}}>{r.b}</td><td style={{color:'var(--green)'}}>{r.a}</td></tr>)}
           </tbody>
@@ -2753,6 +2907,8 @@ export function DocPageClient() {
     if (slug === 'ada-ui') return <DocAdaUI />
     if (slug === 'deploy-local') return <DocDeployLocal />
     if (slug === 'deploy-server') return <DocDeployServer />
+    if (slug === 'release-750') return <DocRelease750 />
+    if (slug === 'release-740') return <DocRelease740 />
     if (slug === 'release-730') return <DocRelease730 />
     if (slug === 'release-720') return <DocRelease720 />
     if (slug === 'release-710') return <DocRelease710 />

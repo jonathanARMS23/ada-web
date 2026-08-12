@@ -2,10 +2,10 @@
 import { useEffect, useRef, useState } from 'react'
 
 const STATS = [
-  { to: 29, suf: '', label: 'suites de tests' },
-  { to: 650, suf: '', label: 'assertions' },
-  { to: 107, suf: '/120', label: 'benchmark score' },
-  { static: 'v7.2', label: 'version stable' },
+  { to: 92, suf: '', label: 'suites de tests' },
+  { to: 2009, suf: '', label: 'assertions' },
+  { to: 36, suf: '', label: 'commandes CLI' },
+  { static: 'v7.5.0', label: 'version stable' },
 ]
 
 function StatNum({ to, suf }: { to: number; suf: string }) {
