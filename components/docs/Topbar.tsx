@@ -48,7 +48,7 @@ export function Topbar({ onMenuClick }: { onMenuClick?: () => void }) {
         </div>
         <div className="version-badge">
           <div className="version-dot" />
-          v7.5.0
+          v7.5.1
         </div>
         <div className="topbar-spacer" />
         <div className="topbar-actions">

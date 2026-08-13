@@ -141,7 +141,7 @@ function DocHome() {
             </Link>
             <DownloadGate className="btn-g" style={{ padding: '11px 22px', borderRadius: 10, fontSize: 14, fontWeight: 500, textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: 7, cursor: 'pointer', fontFamily: 'inherit' }}>
               <svg width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M12 5v14M5 12l7 7 7-7"/><line x1="3" y1="21" x2="21" y2="21"/></svg>
-              Download v7.5.0
+              Download v7.5.1
             </DownloadGate>
             <Link href="/docs/arch-overview" className="btn-g" style={{ padding: '11px 22px', borderRadius: 10, fontSize: 14, fontWeight: 500 }}>
               <svg width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
@@ -173,7 +173,7 @@ function DocHome() {
           <div className="metric"><CountUp to={92} className="metric-value" /><span className="metric-label">Test Suites</span></div>
           <div className="metric"><CountUp to={2009} className="metric-value" /><span className="metric-label">Assertions</span></div>
           <div className="metric"><CountUp to={36} className="metric-value" /><span className="metric-label">CLI Commands</span></div>
-          <div className="metric"><span className="metric-value" style={{ fontSize: 22 }}>v7.5.0</span><span className="metric-label">Current Version</span></div>
+          <div className="metric"><span className="metric-value" style={{ fontSize: 22 }}>v7.5.1</span><span className="metric-label">Current Version</span></div>
         </div>
       </div>
     </>
@@ -214,10 +214,10 @@ function DocInstallation() {
       }}>
         <div>
           <div style={{ fontSize: 15, fontWeight: 600, color: 'var(--text)', marginBottom: 4 }}>
-            ADA v7.5.0 — Archive officielle
+            ADA v7.5.1 — Archive officielle
           </div>
           <div style={{ fontSize: 13, color: 'var(--text-m)' }}>
-            ZIP · 14,9 Mo · Node.js 22+ requis
+            ZIP · 15,0 Mo · Node.js 22+ requis
           </div>
         </div>
         <DownloadGate
@@ -338,7 +338,7 @@ cd ADA-v7`}</code></pre>
       <h2>Vérification</h2>
       <div className="code-block">
         <pre><code>{`ada --version
-# → ADA v7.5.0 (node:sqlite ✓, node:crypto ✓, node:http ✓)
+# → ADA v7.5.1 (node:sqlite ✓, node:crypto ✓, node:http ✓)
 
 ada status
 # → ada-core  ✅  running
@@ -391,11 +391,11 @@ function DocCommands() {
           cmd: 'ada update',
           desc: 'Met à jour ADA vers la dernière version disponible. Télécharge l\'archive, applique les migrations SQLite, redémarre les services.',
           example: `ada update
-# → Checking latest version... v7.5.0 available
-# → Downloading ADA-v7.5.0.zip...
+# → Checking latest version... v7.5.1 available
+# → Downloading ADA-v7.5.1.zip...
 # → Applying migrations...
 # → Restarting services...
-# → ✓ Updated to v7.5.0`,
+# → ✓ Updated to v7.5.1`,
           flags: [
             { f: '--dry-run', d: 'Affiche la version disponible sans installer' },
             { f: '--no-restart', d: 'Met à jour les fichiers sans redémarrer les services' },
@@ -639,7 +639,7 @@ function DocConfiguration() {
       <h2>Full settings.json</h2>
       <div className="code-block">
         <pre><code>{`{
-  "version": "7.5.0",
+  "version": "7.5.1",
   "routing": {
     "defaultMode": "solo",
     "maxAgents": 3,
@@ -1444,6 +1444,80 @@ function DocADR({ adr }: { adr: typeof ADRS[0] }) {
   )
 }
 
+function DocRelease751() {
+  return (
+    <div className="page-section">
+      <div className="breadcrumb">Releases <span>›</span> v7.5.1</div>
+      <div className="page-header">
+        <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 12 }}>
+          <span style={{ fontFamily: 'var(--font-jetbrains, monospace)', fontSize: 12, color: 'var(--text-m)' }}>2026-08-13</span>
+          <span className="latest-badge">Latest</span>
+        </div>
+        <h1>v7.5.1 — Connectivité réelle &amp; scoping par profil</h1>
+      </div>
+
+      <div className="metrics-strip" style={{ marginBottom: 32 }}>
+        <div className="metric"><CountUp to={92} className="metric-value" /><span className="metric-label">Test Suites</span></div>
+        <div className="metric"><CountUp to={2009} className="metric-value" /><span className="metric-label">Assertions</span></div>
+        <div className="metric"><CountUp to={6} className="metric-value" /><span className="metric-label">Commits since v7.5.0</span></div>
+        <div className="metric"><span className="metric-value" style={{ fontSize: 22 }}>0ms</span><span className="metric-label">Zero Dependencies</span></div>
+      </div>
+
+      <div className="callout callout-info" style={{ marginBottom: 28 }}>
+        <span className="callout-icon">⟳</span>
+        <div className="callout-body">
+          <strong>Feature headline : ada-ui reconnecté aux vraies données</strong>
+          <p>
+            <code>ada start server</code> démarre enfin les 3 services dans le bon ordre (control-server →
+            ada-api-nest → interface), sous le bon profil actif — corrigeant une régression silencieuse
+            introduite par la migration vers ada-api-nest. Testé en conditions réelles, y compris sur une
+            configuration de type machine neuve (sans Postgres, mode dégradé).
+          </p>
+        </div>
+      </div>
+
+      {[
+        { type: 'Fixed', color: 'var(--red)', marker: '✓', items: [
+          'ada-ui ne se connectait plus aux vraies données — ada start/ada server ne démarraient jamais ada-api-nest ni le Control Server',
+          'ada-api-nest retombait sur le mauvais profil par défaut (claude-pro codé en dur) même une fois démarré manuellement',
+          'Fiabilité machine neuve : install.sh installe/build/configure désormais ada-api-nest (composant cœur, plus optionnel), génère un .env minimal si absent',
+        ]},
+        { type: 'New', color: 'var(--green)', marker: '+', items: [
+          '/api/agents scopé réellement par profil (chaque profil a son propre agents/ sur disque)',
+          'Statut Obsidian live dans Settings (badge Actif/Inactif, lien Ouvrir, compteur de sessions) + bouton sur /memory + indicateur sidebar',
+        ]},
+        { type: 'Tests', color: 'var(--accent)', marker: '✓', items: [
+          'Suite e2e : 51 échecs/5 passés → 14 échecs/39 passés (agents, dashboard, profile-switcher, workspaces, obsidian désormais 100% verts)',
+        ]},
+      ].map(section => (
+        <div key={section.type} className="changelog-group">
+          <h3>
+            <span className="chip" style={{ background: `${section.color}22`, color: section.color, border: `1px solid ${section.color}44` }}>{section.type}</span>
+          </h3>
+          <ul>
+            {section.items.map((item, i) => (
+              <li key={i}>
+                <span style={{ color: section.color, flexShrink: 0 }}>{section.marker}</span>
+                {item}
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+
+      <div style={{ marginTop: 32, display: 'flex', gap: 12 }}>
+        <a
+          href="https://github.com/jonathanARMS23/AI-Dev-Assistant/releases/tag/v7.5.1"
+          target="_blank" rel="noreferrer"
+          className="btn-g" style={{ fontSize: 13, padding: '8px 16px' }}
+        >
+          GitHub Release →
+        </a>
+      </div>
+    </div>
+  )
+}
+
 function DocRelease750() {
   return (
     <div className="page-section">
@@ -1451,7 +1525,6 @@ function DocRelease750() {
       <div className="page-header">
         <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 12 }}>
           <span style={{ fontFamily: 'var(--font-jetbrains, monospace)', fontSize: 12, color: 'var(--text-m)' }}>2026-08-13</span>
-          <span className="latest-badge">Latest</span>
         </div>
         <h1>v7.5.0 — Adaptive Routing Bascule (ADR-023)</h1>
       </div>
@@ -2907,6 +2980,7 @@ export function DocPageClient() {
     if (slug === 'ada-ui') return <DocAdaUI />
     if (slug === 'deploy-local') return <DocDeployLocal />
     if (slug === 'deploy-server') return <DocDeployServer />
+    if (slug === 'release-751') return <DocRelease751 />
     if (slug === 'release-750') return <DocRelease750 />
     if (slug === 'release-740') return <DocRelease740 />
     if (slug === 'release-730') return <DocRelease730 />

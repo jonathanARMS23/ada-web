@@ -5,7 +5,7 @@ const STATS = [
   { to: 92, suf: '', label: 'suites de tests' },
   { to: 2009, suf: '', label: 'assertions' },
   { to: 36, suf: '', label: 'commandes CLI' },
-  { static: 'v7.5.0', label: 'version stable' },
+  { static: 'v7.5.1', label: 'version stable' },
 ]
 
 function StatNum({ to, suf }: { to: number; suf: string }) {
