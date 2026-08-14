@@ -75,21 +75,23 @@ function DownloadModal({ onClose }: { onClose: () => void }) {
 
   return createPortal(
     <div
-      className="fixed inset-0 z-[1200] flex items-center justify-center overflow-y-auto px-4 py-8"
+      className="fixed inset-0 z-[1200] flex items-center justify-center overflow-y-auto"
       style={{
         background: 'rgba(0,0,0,0.6)',
         backdropFilter: 'blur(8px)',
         animation: 'dl-overlay-in .2s ease both',
+        padding: '32px 16px',
       }}
       onClick={onClose}
       role="presentation"
     >
       <div
-        className="w-full max-w-[440px] my-auto max-h-[calc(100vh-4rem)] overflow-y-auto bg-[var(--surface)] border border-[var(--border)] rounded-2xl"
+        className="w-full max-w-[440px] max-h-[calc(100vh-4rem)] overflow-y-auto bg-[var(--surface)] border border-[var(--border)] rounded-2xl"
         style={{
           boxShadow:
             '0 40px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(124,58,237,.12), 0 0 60px rgba(124,58,237,.10)',
           animation: 'dl-modal-in .32s cubic-bezier(0.16,1,0.3,1) both',
+          margin: 'auto',
         }}
         onClick={e => e.stopPropagation()}
         role="dialog"
@@ -97,7 +99,10 @@ function DownloadModal({ onClose }: { onClose: () => void }) {
         aria-labelledby="download-modal-title"
       >
         {/* Header */}
-        <div className="flex items-center gap-3.5 px-6 py-5 border-b border-[var(--border)]">
+        <div
+          className="flex items-center gap-3.5 border-b border-[var(--border)]"
+          style={{ padding: '20px 24px' }}
+        >
           <div
             className="w-11 h-11 rounded-full flex items-center justify-center flex-shrink-0"
             style={{
@@ -147,7 +152,7 @@ function DownloadModal({ onClose }: { onClose: () => void }) {
         </div>
 
         {/* Body */}
-        <form onSubmit={submit} className="px-6 py-5 flex flex-col gap-4">
+        <form onSubmit={submit} className="flex flex-col gap-4" style={{ padding: '20px 24px' }}>
           <p className="m-0 text-[13px] leading-relaxed text-[var(--text-s)]">
             Saisissez le code à usage unique qui vous a été transmis après votre commande.
           </p>
@@ -163,19 +168,20 @@ function DownloadModal({ onClose }: { onClose: () => void }) {
             autoComplete="off"
             spellCheck={false}
             disabled={busy}
-            className="w-full bg-[var(--code-bg)] border border-[var(--border)] rounded-xl px-4 py-3.5 font-mono text-[16px] text-center tracking-[0.18em] text-[var(--text)] outline-none transition-[border-color,box-shadow] focus:border-[var(--primary)] focus:shadow-[0_0_0_3px_rgba(124,58,237,0.16)] placeholder:text-[var(--text-m)] placeholder:tracking-[0.12em] disabled:opacity-60"
+            className="w-full bg-[var(--code-bg)] border border-[var(--border)] rounded-xl font-mono text-[16px] text-center tracking-[0.18em] text-[var(--text)] outline-none transition-[border-color,box-shadow] focus:border-[var(--primary)] focus:shadow-[0_0_0_3px_rgba(124,58,237,0.16)] placeholder:text-[var(--text-m)] placeholder:tracking-[0.12em] disabled:opacity-60"
+            style={{ padding: '14px 16px' }}
           />
 
           {status === 'error' && (
             <div
               role="alert"
               aria-live="assertive"
-              className="flex items-start gap-2.5 text-[12.5px] text-[var(--red)] bg-[rgba(239,68,68,0.09)] border border-[rgba(239,68,68,0.3)] rounded-xl px-3 py-2.5"
-              style={{ animation: 'dl-status-in .25s ease both' }}
+              className="flex items-start gap-2.5 text-[12.5px] text-[var(--red)] bg-[rgba(239,68,68,0.09)] border border-[rgba(239,68,68,0.3)] rounded-xl"
+              style={{ animation: 'dl-status-in .25s ease both', padding: '10px 12px' }}
             >
               <span
-                className="w-4.5 h-4.5 rounded-full flex items-center justify-center flex-shrink-0 mt-px"
-                style={{ background: 'rgba(239,68,68,0.18)' }}
+                className="w-4.5 h-4.5 rounded-full flex items-center justify-center flex-shrink-0"
+                style={{ background: 'rgba(239,68,68,0.18)', marginTop: 1 }}
                 aria-hidden="true"
               >
                 <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round">
@@ -190,12 +196,12 @@ function DownloadModal({ onClose }: { onClose: () => void }) {
             <div
               role="status"
               aria-live="polite"
-              className="flex items-start gap-2.5 text-[12.5px] text-[var(--green)] bg-[rgba(16,185,129,0.09)] border border-[rgba(16,185,129,0.3)] rounded-xl px-3 py-2.5"
-              style={{ animation: 'dl-status-in .25s ease both' }}
+              className="flex items-start gap-2.5 text-[12.5px] text-[var(--green)] bg-[rgba(16,185,129,0.09)] border border-[rgba(16,185,129,0.3)] rounded-xl"
+              style={{ animation: 'dl-status-in .25s ease both', padding: '10px 12px' }}
             >
               <span
-                className="w-4.5 h-4.5 rounded-full flex items-center justify-center flex-shrink-0 mt-px"
-                style={{ background: 'rgba(16,185,129,0.18)' }}
+                className="w-4.5 h-4.5 rounded-full flex items-center justify-center flex-shrink-0"
+                style={{ background: 'rgba(16,185,129,0.18)', marginTop: 1 }}
                 aria-hidden="true"
               >
                 <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
@@ -209,7 +215,8 @@ function DownloadModal({ onClose }: { onClose: () => void }) {
           <button
             type="submit"
             disabled={code.trim().length === 0 || busy}
-            className="w-full inline-flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-[var(--primary)] text-white text-[14px] font-semibold transition-[background-color,box-shadow,transform] shadow-[0_0_24px_rgba(124,58,237,0.4)] hover:bg-[#6D28D9] hover:shadow-[0_0_38px_rgba(124,58,237,0.6)] hover:-translate-y-px disabled:opacity-45 disabled:cursor-not-allowed disabled:shadow-none disabled:pointer-events-none disabled:translate-y-0"
+            className="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-[var(--primary)] text-white text-[14px] font-semibold transition-[background-color,box-shadow,transform] shadow-[0_0_24px_rgba(124,58,237,0.4)] hover:bg-[#6D28D9] hover:shadow-[0_0_38px_rgba(124,58,237,0.6)] hover:-translate-y-px disabled:opacity-45 disabled:cursor-not-allowed disabled:shadow-none disabled:pointer-events-none disabled:translate-y-0"
+            style={{ padding: '12px 16px' }}
           >
             {status === 'loading' && (
               <svg className="animate-spin" width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true">
