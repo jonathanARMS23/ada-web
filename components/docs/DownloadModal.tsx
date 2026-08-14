@@ -65,34 +65,55 @@ function DownloadModal({ onClose }: { onClose: () => void }) {
     }
   }
 
+  const busy = status === 'loading' || status === 'success'
+
   return (
     <div
       className="fixed inset-0 z-[600] flex items-start justify-center pt-[18vh] px-4"
-      style={{ background: 'rgba(0,0,0,0.6)', backdropFilter: 'blur(8px)' }}
+      style={{
+        background: 'rgba(0,0,0,0.6)',
+        backdropFilter: 'blur(8px)',
+        animation: 'dl-overlay-in .2s ease both',
+      }}
       onClick={onClose}
       role="presentation"
     >
       <div
-        className="w-full max-w-[440px] bg-[var(--surface)] border border-[var(--border)] rounded-2xl overflow-hidden shadow-[0_40px_80px_rgba(0,0,0,0.6)]"
+        className="w-full max-w-[440px] bg-[var(--surface)] border border-[var(--border)] rounded-2xl overflow-hidden"
+        style={{
+          boxShadow:
+            '0 40px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(124,58,237,.12), 0 0 60px rgba(124,58,237,.10)',
+          animation: 'dl-modal-in .32s cubic-bezier(0.16,1,0.3,1) both',
+        }}
         onClick={e => e.stopPropagation()}
         role="dialog"
         aria-modal="true"
         aria-labelledby="download-modal-title"
       >
         {/* Header */}
-        <div className="flex items-center gap-3 px-5 py-4 border-b border-[var(--border)]">
-          <svg
-            width="16"
-            height="16"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            viewBox="0 0 24 24"
-            className="text-[var(--primary)] flex-shrink-0"
+        <div className="flex items-center gap-3.5 px-5 py-4 border-b border-[var(--border)]">
+          <div
+            className="w-11 h-11 rounded-full flex items-center justify-center flex-shrink-0"
+            style={{
+              background: 'rgba(124,58,237,0.12)',
+              boxShadow: '0 0 20px var(--primary-glow)',
+            }}
           >
-            <rect x="3" y="11" width="18" height="11" rx="2" />
-            <path d="M7 11V7a5 5 0 0 1 10 0v4" />
-          </svg>
+            <svg
+              width="19"
+              height="19"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              viewBox="0 0 24 24"
+              className="text-[var(--primary)]"
+            >
+              <rect x="3" y="11" width="18" height="11" rx="2" />
+              <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+            </svg>
+          </div>
           <h2
             id="download-modal-title"
             className="flex-1 m-0 text-[15px] font-semibold text-[var(--text)]"
@@ -103,9 +124,19 @@ function DownloadModal({ onClose }: { onClose: () => void }) {
             type="button"
             onClick={onClose}
             aria-label="Fermer"
-            className="text-[var(--text-m)] hover:text-[var(--text)] transition-colors leading-none text-[18px]"
+            className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 text-[var(--text-m)] hover:text-[var(--text)] hover:bg-[var(--surface-el)] transition-colors"
           >
-            ✕
+            <svg
+              width="14"
+              height="14"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              viewBox="0 0 24 24"
+            >
+              <path d="M18 6 6 18M6 6l12 12" />
+            </svg>
           </button>
         </div>
 
@@ -125,33 +156,61 @@ function DownloadModal({ onClose }: { onClose: () => void }) {
             placeholder="XXXX-XXXX-XXXX-XXXX"
             autoComplete="off"
             spellCheck={false}
-            disabled={status === 'loading' || status === 'success'}
-            className="w-full bg-[var(--code-bg)] border border-[var(--border)] rounded-lg px-3 py-2.5 font-mono text-[14px] tracking-[0.08em] text-[var(--text)] outline-none focus:border-[var(--primary)] transition-colors placeholder-[var(--text-m)] disabled:opacity-60"
+            disabled={busy}
+            className="w-full bg-[var(--code-bg)] border border-[var(--border)] rounded-xl px-4 py-3.5 font-mono text-[16px] text-center tracking-[0.18em] text-[var(--text)] outline-none transition-[border-color,box-shadow] focus:border-[var(--primary)] focus:shadow-[0_0_0_3px_rgba(124,58,237,0.16)] placeholder:text-[var(--text-m)] placeholder:tracking-[0.12em] disabled:opacity-60"
           />
 
           {status === 'error' && (
             <div
               role="alert"
-              className="text-[12.5px] text-[var(--red)] bg-[rgba(239,68,68,0.09)] border border-[rgba(239,68,68,0.3)] rounded-lg px-3 py-2"
+              aria-live="assertive"
+              className="flex items-start gap-2.5 text-[12.5px] text-[var(--red)] bg-[rgba(239,68,68,0.09)] border border-[rgba(239,68,68,0.3)] rounded-xl px-3 py-2.5"
+              style={{ animation: 'dl-status-in .25s ease both' }}
             >
-              {error}
+              <span
+                className="w-4.5 h-4.5 rounded-full flex items-center justify-center flex-shrink-0 mt-px"
+                style={{ background: 'rgba(239,68,68,0.18)' }}
+                aria-hidden="true"
+              >
+                <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round">
+                  <path d="M18 6 6 18M6 6l12 12" />
+                </svg>
+              </span>
+              <span className="leading-relaxed">{error}</span>
             </div>
           )}
 
           {status === 'success' && (
             <div
               role="status"
-              className="text-[12.5px] text-[var(--green)] bg-[rgba(16,185,129,0.09)] border border-[rgba(16,185,129,0.3)] rounded-lg px-3 py-2"
+              aria-live="polite"
+              className="flex items-start gap-2.5 text-[12.5px] text-[var(--green)] bg-[rgba(16,185,129,0.09)] border border-[rgba(16,185,129,0.3)] rounded-xl px-3 py-2.5"
+              style={{ animation: 'dl-status-in .25s ease both' }}
             >
-              Code validé — le téléchargement va démarrer.
+              <span
+                className="w-4.5 h-4.5 rounded-full flex items-center justify-center flex-shrink-0 mt-px"
+                style={{ background: 'rgba(16,185,129,0.18)' }}
+                aria-hidden="true"
+              >
+                <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M5 13l4 4L19 7" />
+                </svg>
+              </span>
+              <span className="leading-relaxed">Code validé — le téléchargement va démarrer.</span>
             </div>
           )}
 
           <button
             type="submit"
-            disabled={code.trim().length === 0 || status === 'loading' || status === 'success'}
-            className="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg bg-[var(--primary)] text-white text-[14px] font-semibold transition-opacity hover:opacity-90 disabled:opacity-45 disabled:cursor-not-allowed"
+            disabled={code.trim().length === 0 || busy}
+            className="w-full inline-flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-[var(--primary)] text-white text-[14px] font-semibold transition-[background-color,box-shadow,transform] shadow-[0_0_24px_rgba(124,58,237,0.4)] hover:bg-[#6D28D9] hover:shadow-[0_0_38px_rgba(124,58,237,0.6)] hover:-translate-y-px disabled:opacity-45 disabled:cursor-not-allowed disabled:shadow-none disabled:pointer-events-none disabled:translate-y-0"
           >
+            {status === 'loading' && (
+              <svg className="animate-spin" width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="3" opacity="0.3" />
+                <path d="M21 12a9 9 0 0 0-9-9" stroke="currentColor" strokeWidth="3" strokeLinecap="round" />
+              </svg>
+            )}
             {status === 'loading' ? 'Vérification…' : 'Débloquer le téléchargement'}
           </button>
 
