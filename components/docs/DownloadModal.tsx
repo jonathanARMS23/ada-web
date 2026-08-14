@@ -1,4 +1,5 @@
 'use client'
+import { createPortal } from 'react-dom'
 import { useEffect, useRef, useState, type CSSProperties, type ReactNode } from 'react'
 
 /**
@@ -19,7 +20,8 @@ function DownloadModal({ onClose }: { onClose: () => void }) {
   const [error, setError] = useState('')
   const inputRef = useRef<HTMLInputElement>(null)
 
-  // Focus à l'ouverture (le composant n'est monté que lorsque la modale est ouverte).
+  // Focus à l'ouverture (le composant n'est monté que lorsque la modale est ouverte,
+  // donc uniquement suite à une interaction client — `document` est déjà disponible).
   useEffect(() => {
     inputRef.current?.focus()
   }, [])
@@ -67,9 +69,13 @@ function DownloadModal({ onClose }: { onClose: () => void }) {
 
   const busy = status === 'loading' || status === 'success'
 
-  return (
+  // Garde défensive : `document` n'existe que côté client, or ce composant n'est
+  // jamais monté pendant le rendu serveur (uniquement après un clic utilisateur).
+  if (typeof document === 'undefined') return null
+
+  return createPortal(
     <div
-      className="fixed inset-0 z-[600] flex items-start justify-center pt-[18vh] px-4"
+      className="fixed inset-0 z-[1200] flex items-center justify-center overflow-y-auto px-4 py-8"
       style={{
         background: 'rgba(0,0,0,0.6)',
         backdropFilter: 'blur(8px)',
@@ -79,7 +85,7 @@ function DownloadModal({ onClose }: { onClose: () => void }) {
       role="presentation"
     >
       <div
-        className="w-full max-w-[440px] bg-[var(--surface)] border border-[var(--border)] rounded-2xl overflow-hidden"
+        className="w-full max-w-[440px] my-auto max-h-[calc(100vh-4rem)] overflow-y-auto bg-[var(--surface)] border border-[var(--border)] rounded-2xl"
         style={{
           boxShadow:
             '0 40px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(124,58,237,.12), 0 0 60px rgba(124,58,237,.10)',
@@ -91,7 +97,7 @@ function DownloadModal({ onClose }: { onClose: () => void }) {
         aria-labelledby="download-modal-title"
       >
         {/* Header */}
-        <div className="flex items-center gap-3.5 px-5 py-4 border-b border-[var(--border)]">
+        <div className="flex items-center gap-3.5 px-6 py-5 border-b border-[var(--border)]">
           <div
             className="w-11 h-11 rounded-full flex items-center justify-center flex-shrink-0"
             style={{
@@ -141,7 +147,7 @@ function DownloadModal({ onClose }: { onClose: () => void }) {
         </div>
 
         {/* Body */}
-        <form onSubmit={submit} className="px-5 py-4 flex flex-col gap-4">
+        <form onSubmit={submit} className="px-6 py-5 flex flex-col gap-4">
           <p className="m-0 text-[13px] leading-relaxed text-[var(--text-s)]">
             Saisissez le code à usage unique qui vous a été transmis après votre commande.
           </p>
@@ -219,7 +225,8 @@ function DownloadModal({ onClose }: { onClose: () => void }) {
           </p>
         </form>
       </div>
-    </div>
+    </div>,
+    document.body,
   )
 }
 
