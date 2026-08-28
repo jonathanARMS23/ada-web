@@ -78,7 +78,8 @@ export const NAV_ITEMS: NavItem[] = [
   { slug: 'adr-019', title: 'ADR-019 Bench v2 Ablation', group: 'ADRs' },
 
   // Releases
-  { slug: 'release-752', title: 'v7.5.2 (Latest)', group: 'Releases' },
+  { slug: 'release-760', title: 'v7.6.0 (Latest)', group: 'Releases' },
+  { slug: 'release-752', title: 'v7.5.2', group: 'Releases' },
   { slug: 'release-751', title: 'v7.5.1', group: 'Releases' },
   { slug: 'release-750', title: 'v7.5.0', group: 'Releases' },
   { slug: 'release-740', title: 'v7.4.0', group: 'Releases' },

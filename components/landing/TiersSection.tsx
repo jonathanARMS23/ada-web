@@ -4,9 +4,9 @@ import React, { useState } from 'react'
 const TIERS = [
   { id: 't1', n: '1', model: 'claude-haiku-4-5', usage: 'Vérification, coverage, tâches simples', cost: '🟢 Faible', nc: 'ct1', mc: '#10B981',
     detail: 'Utilisé pour les phases courtes et répétitives : écriture de tests, validation de schéma, couverture de code. Le sampling Beta favorise Haiku quand les runs similaires passés ont été rapides et sans erreur.' },
-  { id: 't2', n: '2', model: 'claude-sonnet-4-6', usage: 'Frontend, specs, tâches standard', cost: '🟡 Moyen', nc: 'ct2', mc: '#F59E0B',
+  { id: 't2', n: '2', model: 'claude-sonnet-5', usage: 'Frontend, specs, tâches standard', cost: '🟡 Moyen', nc: 'ct2', mc: '#F59E0B',
     detail: 'Équilibre qualité / coût pour la majorité des tâches frontend, rédaction de specs, design d\'API et revues de code standards. Tier par défaut pour classify qui retourne tier=2.' },
-  { id: 't3', n: '3', model: 'claude-opus-4-8', usage: 'Backend complexe, review, architecture', cost: '🔴 Élevé', nc: 'ct3', mc: '#EF4444',
+  { id: 't3', n: '3', model: 'claude-opus-5', usage: 'Backend complexe, review, architecture', cost: '🔴 Élevé', nc: 'ct3', mc: '#EF4444',
     detail: 'Réservé aux tâches à fort raisonnement : backend complexe, review d\'architecture, refactoring critique, debugging de race conditions.' },
 ]
 
