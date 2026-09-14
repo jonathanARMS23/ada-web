@@ -123,25 +123,25 @@ function DocHome() {
         <div className="doc-hero-content" style={{ position: 'relative', zIndex: 1 }}>
           <div className="hero-tag">
             <svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor"><circle cx="5" cy="5" r="5"/></svg>
-            Agent Dispatch Architecture
+            AI Engineering OS · ByARMS
           </div>
           <h1 style={{ fontSize: 56, fontWeight: 700, lineHeight: 1.1, letterSpacing: '-1.5px', marginBottom: 16 }}>
-            Orchestrate AI agents<br />
+            Operate AI engineering<br />
             <span style={{ background: 'linear-gradient(135deg, var(--primary), var(--accent))', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>
-              at production scale
+              across Claude & Codex
             </span>
           </h1>
           <p className="hero-sub" style={{ fontSize: 18, color: 'var(--text-s)', maxWidth: 560, marginBottom: 32, lineHeight: 1.6 }}>
-            ADA routes tasks to the right Claude agent tier via Thompson Sampling, executes multi-phase pipelines as DAGs, and persists insights in a zero-dep SQLite ReasoningBank.
+            ADA unifie l’exécution, la mémoire projet, les permissions et la traçabilité de Claude Code et Codex dans une couche d’ingénierie commune.
           </p>
           <div className="hero-actions" style={{ display: 'flex', gap: 12, flexWrap: 'wrap', marginBottom: 48 }}>
-            <Link href="/docs/installation" className="btn-p" style={{ padding: '11px 22px', borderRadius: 10, fontSize: 14, fontWeight: 500 }}>
+            <Link href="/docs/ai-engineering-os" className="btn-p" style={{ padding: '11px 22px', borderRadius: 10, fontSize: 14, fontWeight: 500 }}>
               <svg width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-              Get Started
+              Comprendre ADA
             </Link>
             <DownloadGate className="btn-g" style={{ padding: '11px 22px', borderRadius: 10, fontSize: 14, fontWeight: 500, textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: 7, cursor: 'pointer', fontFamily: 'inherit' }}>
               <svg width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M12 5v14M5 12l7 7 7-7"/><line x1="3" y1="21" x2="21" y2="21"/></svg>
-              Download v7.6.0
+              Download v7.7.0
             </DownloadGate>
             <Link href="/docs/arch-overview" className="btn-g" style={{ padding: '11px 22px', borderRadius: 10, fontSize: 14, fontWeight: 500 }}>
               <svg width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
@@ -155,9 +155,9 @@ function DocHome() {
       <div className="page-section">
         <div className="cards-grid">
           {[
-            { icon: '🎓', title: 'Thompson Sampling', desc: 'Probabilistic agent selection that improves with each run. Alpha/beta distributions converge to optimal routing over time.' },
-            { icon: '🎛', title: 'DAG Pipelines', desc: 'Complex features decompose into phase graphs. Independent phases execute concurrently, reducing wall-clock time significantly.' },
-            { icon: '📊', title: 'ReasoningBank', desc: 'Zero-dependency SQLite persistence for agent insights, project conventions, and routing history across all sessions.' },
+            { icon: '◈', title: 'Multi-engine Core', desc: 'Claude Code et Codex partagent un contrat d’exécution, des identités corrélées et des contrôles communs.' },
+            { icon: '◎', title: 'Project Memory', desc: 'Conventions et leçons restent isolées par projet et disponibles au-delà d’une session.' },
+            { icon: '◇', title: 'Execution Control', desc: 'Permissions, baux d’écriture, états terminaux et tentatives produisent une exécution traçable.' },
           ].map(c => (
             <div key={c.title} className="doc-card">
               <span className="card-icon">{c.icon}</span>
@@ -170,10 +170,10 @@ function DocHome() {
 
       <div className="page-section">
         <div className="metrics-strip">
-          <div className="metric"><CountUp to={92} className="metric-value" /><span className="metric-label">Test Suites</span></div>
-          <div className="metric"><CountUp to={2009} className="metric-value" /><span className="metric-label">Assertions</span></div>
-          <div className="metric"><CountUp to={36} className="metric-value" /><span className="metric-label">CLI Commands</span></div>
-          <div className="metric"><span className="metric-value" style={{ fontSize: 22 }}>v7.6.0</span><span className="metric-label">Current Version</span></div>
+          <div className="metric"><CountUp to={2} className="metric-value" /><span className="metric-label">Moteurs validés</span></div>
+          <div className="metric"><CountUp to={2417} className="metric-value" /><span className="metric-label">Tests core</span></div>
+          <div className="metric"><CountUp to={458} className="metric-value" /><span className="metric-label">Tests API</span></div>
+          <div className="metric"><span className="metric-value" style={{ fontSize: 22 }}>v7.7.0</span><span className="metric-label">Release actuelle</span></div>
         </div>
       </div>
     </>
@@ -214,10 +214,10 @@ function DocInstallation() {
       }}>
         <div>
           <div style={{ fontSize: 15, fontWeight: 600, color: 'var(--text)', marginBottom: 4 }}>
-            ADA v7.6.0 — Archive officielle
+            ADA v7.7.0 — Archive officielle
           </div>
           <div style={{ fontSize: 13, color: 'var(--text-m)' }}>
-            ZIP · 15,1 Mo · Node.js 22+ requis
+            ZIP · 16,2 Mo · Node.js 22+ requis
           </div>
         </div>
         <DownloadGate
@@ -338,7 +338,7 @@ cd ADA-v7`}</code></pre>
       <h2>Vérification</h2>
       <div className="code-block">
         <pre><code>{`ada --version
-# → ADA v7.6.0 (node:sqlite ✓, node:crypto ✓, node:http ✓)
+# → ADA v7.7.0 (node:sqlite ✓, node:crypto ✓, node:http ✓)
 
 ada status
 # → ada-core  ✅  running
@@ -391,11 +391,11 @@ function DocCommands() {
           cmd: 'ada update',
           desc: 'Met à jour ADA vers la dernière version disponible. Télécharge l\'archive, applique les migrations SQLite, redémarre les services.',
           example: `ada update
-# → Checking latest version... v7.6.0 available
-# → Downloading ADA-v7.6.0.zip...
+# → Checking latest version... v7.7.0 available
+# → Downloading ADA-v7.7.0.zip...
 # → Applying migrations...
 # → Restarting services...
-# → ✓ Updated to v7.6.0`,
+# → ✓ Updated to v7.7.0`,
           flags: [
             { f: '--dry-run', d: 'Affiche la version disponible sans installer' },
             { f: '--no-restart', d: 'Met à jour les fichiers sans redémarrer les services' },
@@ -639,7 +639,7 @@ function DocConfiguration() {
       <h2>Full settings.json</h2>
       <div className="code-block">
         <pre><code>{`{
-  "version": "7.6.0",
+  "version": "7.7.0",
   "routing": {
     "defaultMode": "solo",
     "maxAgents": 3,
@@ -1444,6 +1444,26 @@ function DocADR({ adr }: { adr: typeof ADRS[0] }) {
   )
 }
 
+function DocRelease770() {
+  return (
+    <div className="page-section">
+      <div className="breadcrumb">Releases <span>›</span> v7.7.0</div>
+      <div className="page-header">
+        <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 12 }}><span style={{ fontFamily: 'var(--font-jetbrains, monospace)', fontSize: 12, color: 'var(--text-m)' }}>2026-09-14</span><span className="latest-badge">Latest</span></div>
+        <h1>v7.7.0 — ADA devient un AI Engineering OS bi-moteur</h1>
+        <p>Cette release intègre Codex aux côtés de Claude Code, consolide les contrats d’exécution communs et livre le terminal interactif moteur-agnostique.</p>
+      </div>
+      <div className="metrics-strip" style={{ marginBottom: 32 }}><div className="metric"><CountUp to={2} className="metric-value" /><span className="metric-label">Moteurs réels</span></div><div className="metric"><CountUp to={87} className="metric-value" /><span className="metric-label">Suites core</span></div><div className="metric"><CountUp to={2417} className="metric-value" /><span className="metric-label">Tests core</span></div><div className="metric"><CountUp to={458} className="metric-value" /><span className="metric-label">Tests API validés</span></div></div>
+      {[
+        { type: 'Added', color: 'var(--green)', marker: '+', items: ['Noyau moteur-agnostique : EngineAdapter, registre moteurs/modèles, identités natives et journal des tentatives', 'Adaptateur Codex natif via app-server stdio : threads, streaming, interruptions, approbations et usage', 'ada launch : terminal interactif commun à Claude Code et Codex, avec reprise et permissions', 'Mémoire ADA pour Codex via instructions projet et hook SessionStart'] },
+        { type: 'Fixed', color: 'var(--accent)', marker: '✓', items: ['Revue correctrice complète des chemins Claude Code et Codex contre les protocoles réels', 'Writer unique par workspace et attente de fin effective avant libération du bail', 'Propagation correcte des échecs terminaux, isolation des credentials et mémoire filtrée par projet', 'Sélection de modèles compatible lors des changements de moteur'] },
+      ].map(section => <div key={section.type} className="changelog-group"><h3><span className="chip" style={{ background: `${section.color}22`, color: section.color, border: `1px solid ${section.color}44` }}>{section.type}</span></h3><ul>{section.items.map((item, i) => <li key={i}><span style={{ color: section.color, flexShrink: 0 }}>{section.marker}</span>{item}</li>)}</ul></div>)}
+      <div className="callout callout-info"><span className="callout-icon">i</span><div className="callout-body"><strong>Validation réelle</strong><p>Les deux moteurs ont été testés avec leurs abonnements locaux. Aucun appel API facturé n’a été utilisé.</p></div></div>
+      <div style={{ marginTop: 32, display: 'flex', gap: 12 }}><a href="https://github.com/jonathanARMS23/AI-Dev-Assistant/releases/tag/v7.7.0" target="_blank" rel="noreferrer" className="btn-g" style={{ fontSize: 13, padding: '8px 16px' }}>GitHub Release →</a></div>
+    </div>
+  )
+}
+
 function DocRelease760() {
   return (
     <div className="page-section">
@@ -1451,7 +1471,6 @@ function DocRelease760() {
       <div className="page-header">
         <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 12 }}>
           <span style={{ fontFamily: 'var(--font-jetbrains, monospace)', fontSize: 12, color: 'var(--text-m)' }}>2026-08-28</span>
-          <span className="latest-badge">Latest</span>
         </div>
         <h1>v7.6.0 — Installeur multi-OS &amp; fiabilité du routing</h1>
       </div>
@@ -3031,6 +3050,44 @@ server {
   )
 }
 
+function DocAiEngineeringOS() {
+  return <div className="page-section"><div className="breadcrumb">AI Engineering OS <span>›</span> Vision</div><div className="page-header"><div className="hero-tag">ADA PLATFORM</div><h1>Le système d’exploitation de l’AI Engineering</h1><p>ADA est la couche d’exécution développée par ByARMS pour transformer Claude Code et Codex en une capacité d’ingénierie contrôlée, observable et capitalisable.</p></div>
+    <h2>Pourquoi un OS ?</h2><p>Un moteur agentique sait raisonner et produire. Une organisation a besoin de davantage : une identité projet stable, une mémoire partagée, des règles de permission, une sélection de moteur, un contrôle des écritures, des événements et une preuve du résultat. ADA réunit ces responsabilités sans remplacer les moteurs.</p>
+    <div className="cards-grid">{[
+      ['Intent', 'Qualifier et décomposer le travail avant exécution.'], ['Context', 'Rappeler conventions et connaissances du bon projet.'], ['Execution', 'Résoudre moteur, modèle, profil, répertoire et permission.'], ['Control', 'Sérialiser les écritures et refuser les chemins non sûrs.'], ['Evidence', 'Journaliser événements, tentatives, usage et statut terminal.'], ['Learning', 'Capitaliser les résultats utiles pour les runs suivants.'],
+    ].map(([title, desc]) => <div className="doc-card" key={title}><h3>{title}</h3><p>{desc}</p></div>)}</div>
+    <h2>Positionnement ByARMS</h2><div className="callout callout-info"><span className="callout-icon">→</span><div className="callout-body"><strong>ADA n’est pas une offre autonome.</strong><p>C’est l’infrastructure interne qui renforce les offres ByARMS : exécution plus cohérente, capitalisation du savoir projet et contrôle technique explicite.</p></div></div>
+  </div>
+}
+
+function DocEngines() {
+  return <div className="page-section"><div className="breadcrumb">AI Engineering OS <span>›</span> Moteurs</div><div className="page-header"><h1>Claude Code + Codex</h1><p>Deux moteurs natifs derrière un même contrat d’exécution, sans masquer leurs différences.</p></div>
+    <table className="doc-table"><thead><tr><th>Capacité</th><th>Claude Code</th><th>Codex</th></tr></thead><tbody>
+      <tr><td>Transport de phase</td><td><code>cli-headless</code></td><td><code>app-server stdio</code></td></tr><tr><td>Abonnement local</td><td>Validé en réel</td><td>Validé en réel</td></tr><tr><td>Découverte de modèle</td><td>Configuration centralisée</td><td>Métadonnées natives</td></tr><tr><td>Streaming / résultat</td><td>Événements normalisés</td><td>Texte, état et usage structurés</td></tr><tr><td>Session interactive</td><td>Disponible via <code>ada launch</code></td><td>Disponible via <code>ada launch</code></td></tr><tr><td>Mémoire projet</td><td>Hooks ADA</td><td>Pack Codex + <code>SessionStart</code></td></tr>
+    </tbody></table>
+    <h2>Configuration minimale</h2><div className="code-block"><pre><code>{`engines:\n  claude_code:\n    enabled: true\n    usage_mode: subscription\n  codex:\n    enabled: true\n    usage_mode: subscription`}</code></pre></div>
+    <div className="callout callout-warn"><span className="callout-icon">!</span><div className="callout-body"><strong>Mode API non opérationnel</strong><p>ADA refuse explicitement ce mode tant que la résolution des credentials, la réservation de budget et la réconciliation des coûts ne sont pas intégrées.</p></div></div>
+  </div>
+}
+
+function DocExecutionContract() {
+  return <div className="page-section"><div className="breadcrumb">AI Engineering OS <span>›</span> Contrat d’exécution</div><div className="page-header"><h1>Du run à la preuve</h1><p>Le contrat moteur-agnostique garde les invariants ADA stables, quel que soit le moteur retenu.</p></div>
+    <h2>Cycle d’une phase</h2><div className="stepper">{[
+      ['1','Resolve','Vérifier activation, disponibilité, mode d’usage et modèle compatible.'],['2','Acquire','Acquérir le bail d’écriture sur le chemin canonique du workspace.'],['3','Start','Transmettre prompt, contexte, identité de tentative, permission, timeout et cwd.'],['4','Observe','Normaliser les événements, la sortie, l’usage et l’état terminal.'],['5','Close','Attendre la fin ou le drainage effectif avant de libérer le bail.'],
+    ].map(([n,t,d]) => <div className="doc-step" key={t}><div className="step-num">{n}</div><div className="step-body"><h3>{t}</h3><p>{d}</p></div></div>)}</div>
+    <h2>Invariants de sécurité</h2><ul><li>Un seul écrivain par workspace protégé.</li><li>Aucun succès déclaré après l’échec d’une phase obligatoire.</li><li>Identités natives Claude et Codex conservées séparément.</li><li>Mémoire filtrée par identité projet.</li><li>Credentials API isolés des exécutions sur abonnement.</li></ul>
+  </div>
+}
+
+function DocStatus() {
+  return <div className="page-section"><div className="breadcrumb">AI Engineering OS <span>›</span> État produit</div><div className="page-header"><h1>État réel du socle bi-moteur</h1><p>Release v7.7.0 du 14 septembre 2026. Cette page distingue les capacités démontrées des chantiers encore ouverts.</p></div>
+    <h2>Validé</h2><div className="callout callout-success"><span className="callout-icon">✓</span><div className="callout-body"><strong>Exécution réelle sur les deux abonnements</strong><p>Adaptateurs Claude Code et Codex validés individuellement, contrats communs, sélection de modèles, événements terminaux, identité et mémoire projet.</p></div></div>
+    <ul><li>2 417 tests coordinateur et hooks sur 87 suites, sans échec.</li><li>458 tests API validés lors de la campagne complète.</li><li>Essais réels sur abonnement réussis : Claude Code et Codex, y compris via le terminal unifié.</li><li>Bail d’écriture intégré aux phases et sessions protégées.</li></ul>
+    <h2>En cours d’industrialisation</h2><table className="doc-table"><thead><tr><th>Capacité</th><th>État</th></tr></thead><tbody><tr><td>Pipeline métier complet avec bascule de moteur</td><td>Preuve end-to-end à produire</td></tr><tr><td>Routage par spécialités et poids</td><td>Socle livré, mesure à poursuivre</td></tr><tr><td>File persistante et reprise automatique</td><td>Refus sûr disponible, reprise absente</td></tr><tr><td>Runner de revue croisée</td><td>Mandats et décisions présents, exécution absente</td></tr><tr><td>Mode API et budget</td><td>Refus explicite</td></tr></tbody></table>
+    <div className="callout callout-warn"><span className="callout-icon">!</span><div className="callout-body"><strong>Interprétation</strong><p>ADA possède un socle crédible d’AI Engineering OS. La plateforme complète demeure une trajectoire produit ; les éléments ci-dessus ne doivent pas être présentés comme déjà opérationnels.</p></div></div>
+  </div>
+}
+
 function DocGeneric({ slug }: { slug: string }) {
   const item = NAV_ITEMS.find(i => i.slug === slug)
   return (
@@ -3089,6 +3146,10 @@ export function DocPageClient() {
 
   function renderContent() {
     if (slug === '') return <DocHome />
+    if (slug === 'ai-engineering-os') return <DocAiEngineeringOS />
+    if (slug === 'engines') return <DocEngines />
+    if (slug === 'execution-contract') return <DocExecutionContract />
+    if (slug === 'status') return <DocStatus />
     if (slug === 'installation') return <DocInstallation />
     if (slug === 'commands') return <DocCommands />
     if (slug === 'configuration') return <DocConfiguration />
@@ -3120,6 +3181,7 @@ export function DocPageClient() {
     if (slug === 'ada-ui') return <DocAdaUI />
     if (slug === 'deploy-local') return <DocDeployLocal />
     if (slug === 'deploy-server') return <DocDeployServer />
+    if (slug === 'release-770') return <DocRelease770 />
     if (slug === 'release-760') return <DocRelease760 />
     if (slug === 'release-752') return <DocRelease752 />
     if (slug === 'release-751') return <DocRelease751 />
@@ -3148,4 +3210,3 @@ export function DocPageClient() {
     </DocsLayout>
   )
 }
-

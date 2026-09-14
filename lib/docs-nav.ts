@@ -8,6 +8,12 @@ export const NAV_ITEMS: NavItem[] = [
   // Navigation
   { slug: '', title: 'Home', group: 'Navigation' },
 
+  // AI Engineering OS
+  { slug: 'ai-engineering-os', title: 'Vision & principes', group: 'AI Engineering OS' },
+  { slug: 'engines', title: 'Claude Code + Codex', group: 'AI Engineering OS' },
+  { slug: 'execution-contract', title: 'Contrat d’exécution', group: 'AI Engineering OS' },
+  { slug: 'status', title: 'État produit', group: 'AI Engineering OS' },
+
   // Quick Start
   { slug: 'installation', title: 'Installation', group: 'Quick Start' },
   { slug: 'commands', title: 'Commandes ADA', group: 'Quick Start' },
@@ -78,7 +84,8 @@ export const NAV_ITEMS: NavItem[] = [
   { slug: 'adr-019', title: 'ADR-019 Bench v2 Ablation', group: 'ADRs' },
 
   // Releases
-  { slug: 'release-760', title: 'v7.6.0 (Latest)', group: 'Releases' },
+  { slug: 'release-770', title: 'v7.7.0 (Latest)', group: 'Releases' },
+  { slug: 'release-760', title: 'v7.6.0', group: 'Releases' },
   { slug: 'release-752', title: 'v7.5.2', group: 'Releases' },
   { slug: 'release-751', title: 'v7.5.1', group: 'Releases' },
   { slug: 'release-750', title: 'v7.5.0', group: 'Releases' },

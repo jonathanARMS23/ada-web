@@ -15,9 +15,9 @@ const jetbrains = JetBrains_Mono({
 })
 
 export const metadata: Metadata = {
-  title: 'ADA — Orchestrate. Learn. Ship.',
-  description: 'Le coordinateur adaptatif pour Claude Code. Mémoire persistante. Routing intelligent. Production-ready.',
-  keywords: ['ADA', 'AI Dev Assistant', 'Claude Code', 'orchestrator', 'Thompson Sampling', 'agents'],
+  title: 'ADA — AI Engineering OS by ByARMS',
+  description: 'La couche d’exploitation AI Engineering de ByARMS pour orchestrer Claude Code et Codex avec mémoire, contrôle, observabilité et garde-fous.',
+  keywords: ['ADA', 'AI Engineering OS', 'ByARMS', 'Claude Code', 'Codex', 'agent orchestration', 'AI engineering'],
   icons: {
     icon: [
       { url: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' },

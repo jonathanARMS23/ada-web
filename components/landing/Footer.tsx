@@ -11,15 +11,15 @@ export function Footer() {
             <Image src="/ada-logo.png" alt="ADA" fill style={{ objectFit: 'cover', objectPosition: 'center' }} />
           </div>
           <div>
-            <span style={{ fontWeight: 600, color: 'var(--text-s)' }}>ADA v7.6.0</span>
-            <span style={{ color: 'var(--text-m)', marginLeft: 6 }}>— Orchestrate. Learn. Ship.</span>
+            <span style={{ fontWeight: 600, color: 'var(--text-s)' }}>ADA · AI Engineering OS</span>
+            <span style={{ color: 'var(--text-m)', marginLeft: 6 }}>— Engineered by ByARMS</span>
           </div>
         </div>
         <div className="foot-links">
           <Link href="/docs">Documentation</Link>
-          <Link href="/docs/cli-run">CLI Reference</Link>
-          <Link href="/docs/adr-001">ADRs</Link>
-          <Link href="/docs/release-751">Releases</Link>
+          <Link href="/docs/engines">Claude + Codex</Link>
+          <Link href="/docs/status">État produit</Link>
+          <a href="https://byarms.com" target="_blank" rel="noreferrer">ByARMS ↗</a>
         </div>
       </div>
 

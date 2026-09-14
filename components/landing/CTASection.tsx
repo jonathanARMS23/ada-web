@@ -1,22 +1,8 @@
 import Link from 'next/link'
 
 export function CTASection() {
-  return (
-    <section className="cta-sec" id="start">
-      <div className="cta-glow" />
-      <div style={{ position: 'relative', zIndex: 1 }}>
-        <div className="sec-label" style={{ justifyContent: 'center' }}>✦ Prêt ?</div>
-        <h2 className="cta-h2">
-          <span className="grad">Orchestrez vos agents.<br />Maintenant.</span>
-        </h2>
-        <p className="cta-sub">Une commande pour démarrer. Zéro config. Mémoire active dès le premier run.</p>
-        <div className="cta-cmd">$ ada run &quot;ma première feature&quot;</div>
-        <br />
-        <div style={{ display: 'flex', gap: 14, justifyContent: 'center', flexWrap: 'wrap', marginTop: 32 }}>
-          <Link href="/docs" className="btn-p">Voir la documentation →</Link>
-          <Link href="#features" className="btn-g">Revoir les features</Link>
-        </div>
-      </div>
-    </section>
-  )
+  return <>
+    <section className="sec engines-section" id="engines"><div className="wrap"><div className="section-heading"><div><div className="sec-label">ENGINE ABSTRACTION</div><h2 className="sec-h2">Claude Code et Codex.<br />Le meilleur des deux, sous contrôle.</h2></div><p className="sec-sub">ADA ne gomme pas les moteurs. Il expose leurs forces dans un cadre commun, avec une sélection explicable et des limites sûres.</p></div><div className="engine-cards"><article><div className="engine-card-head"><span className="engine-icon big">C</span><div><span>ENGINE 01</span><h3>Claude Code</h3></div></div><p>Exécution headless native, sessions interactives, streaming et modèle résolu par la configuration ADA.</p><ul><li>Adaptateur de phase opérationnel</li><li>Abonnement local validé en réel</li><li>Terminal interactif via ada launch</li></ul></article><article><div className="engine-card-head"><span className="engine-icon codex big">X</span><div><span>ENGINE 02</span><h3>Codex</h3></div></div><p>Protocole app-server natif, découverte des modèles, usage structuré et mémoire projet via le pack Codex.</p><ul><li>Adaptateur de phase opérationnel</li><li>Abonnement ChatGPT validé en réel</li><li>Terminal interactif via ada launch</li></ul></article></div><div className="truth-note"><b>Transparence produit.</b> Le socle bi-moteur est validé. Le routage avancé par spécialités, la reprise persistante et le runner de revue croisée restent en cours d’industrialisation. <Link href="/docs/status">Voir l’état réel →</Link></div></div></section>
+    <section className="cta-sec" id="start"><div className="cta-glow" /><div className="cta-inner"><div className="sec-label">BUILT BY BYARMS</div><h2 className="cta-h2">ADA n’est pas le produit.<br /><span className="grad">C’est notre avantage d’exécution.</span></h2><p className="cta-sub">ByARMS conçoit et livre des produits logiciels avec une infrastructure d’AI Engineering développée, testée et opérée en interne.</p><div className="cta-actions"><a href="https://byarms.com" className="btn-p" target="_blank" rel="noreferrer">Découvrir les offres ByARMS ↗</a><Link href="/docs/ai-engineering-os" className="btn-g">Lire la vision technique</Link></div></div></section>
+  </>
 }
